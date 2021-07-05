@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Typography, Container, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PhoneSharpIcon from "@material-ui/icons/PhoneSharp";
-import Popup from "../../../components/Popup";
+import Popup from "./Main-call-popup";
 
 const useStyles = makeStyles((theme) => ({
   mainContent: {
