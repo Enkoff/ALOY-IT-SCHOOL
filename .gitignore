@@ -1,5 +1,5 @@
 node_modules
 .gitignore
 yarn.lock
-src
-public
+/src
+/public
