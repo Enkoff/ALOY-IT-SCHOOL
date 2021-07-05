@@ -6,8 +6,6 @@ import {
   Avatar,
   Button,
   TextField,
-  FormControlLabel,
-  Checkbox,
   IconButton,
   Dialog,
   Container,
@@ -16,6 +14,8 @@ import {
   Link,
 } from "@material-ui/core";
 import CancelIcon from "@material-ui/icons/Cancel";
+import { useDispatch, useSelector } from "react-redux";
+import { clearErrorMessage, setUserData } from "../redux/userActions";
 
 function Copyright() {
   return (
@@ -49,17 +49,36 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 1),
   },
   cancelContainer: {
-      position: 'absolute',
-      right: '1px'  
-  }
+    position: "absolute",
+    right: "1px",
+  },
 }));
 
 export default function LogIn({ isLoginClick }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   const [open, setIsOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { errorMessages, isAuth } = useSelector((state) => state.userReducer);
 
   const handleClickClouse = () => {
     setIsOpen(false);
+    setName("");
+    setPassword("");
+    setTimeout(() => {
+      dispatch(clearErrorMessage());
+    }, 100);
+  };
+  
+  if (isAuth && open) {
+    handleClickClouse();
+  }
+
+  const handleLogin = () => {
+    dispatch(setUserData(name, password));
   };
 
   useEffect(() => {
@@ -73,7 +92,7 @@ export default function LogIn({ isLoginClick }) {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.cancelContainer}>
-          <IconButton onClick={handleClickClouse} color='inherit'>
+          <IconButton onClick={handleClickClouse} color="inherit">
             <CancelIcon />
           </IconButton>
         </div>
@@ -84,11 +103,11 @@ export default function LogIn({ isLoginClick }) {
           <Typography component="h1" variant="h5">
              Вхід
           </Typography>
-          <form className={classes.form} noValidate>
+          <div className={classes.form}>
             <TextField
+              onChange={(e) => setName(e.target.value)}
               variant="outlined"
               margin="normal"
-              required
               fullWidth
               type="name"
               id="name"
@@ -98,9 +117,9 @@ export default function LogIn({ isLoginClick }) {
               autoFocus
             />
             <TextField
+              onChange={(e) => setPassword(e.target.value)}
               variant="outlined"
               margin="normal"
-              required
               fullWidth
               name="password"
               label="Пароль"
@@ -108,20 +127,22 @@ export default function LogIn({ isLoginClick }) {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Запамятати мене"
-            />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={handleLogin}
             >
               Увійти
             </Button>
-          </form>
+          </div>
+          {!isAuth &&
+            errorMessages !== null &&
+            errorMessages.map((el, i) => {
+              return <p key={i}>{el}</p>;
+            })}
         </div>
         <Box mt={8}>
           <Copyright />
