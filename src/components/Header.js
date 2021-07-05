@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Toolbar,
@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles } from "@material-ui/core/styles";
+import LogIn from "./LogIn";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +30,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = (props) => {
+  const [isLoginClick, setIsLoginClick] = useState(false);
+
+ const handleClick = () => {
+  setIsLoginClick(true);
+   setTimeout(() => {
+    setIsLoginClick(false);
+   }, 1);
+ }
+
   const classes = useStyles();
 
   return (
@@ -46,9 +56,10 @@ const Header = (props) => {
           <Typography variant="h6" className={classes.title}>
             ALOY School
           </Typography>
-          <Button color="secondary" variant="contained">
+          <Button onClick={handleClick} color="secondary" variant="contained">
             Увійти
           </Button>
+          <LogIn isLoginClick={isLoginClick}/>
         </Toolbar>
       </Container>
     </AppBar>
