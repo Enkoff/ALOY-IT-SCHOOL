@@ -1,22 +1,20 @@
 {
   "files": {
-    "main.css": "/react-gh-pages/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/react-gh-pages/static/js/main.0ef0e3cc.chunk.js",
-    "main.js.map": "/react-gh-pages/static/js/main.0ef0e3cc.chunk.js.map",
-    "runtime-main.js": "/react-gh-pages/static/js/runtime-main.1e6aaef4.js",
-    "runtime-main.js.map": "/react-gh-pages/static/js/runtime-main.1e6aaef4.js.map",
-    "static/js/2.092060dc.chunk.js": "/react-gh-pages/static/js/2.092060dc.chunk.js",
-    "static/js/2.092060dc.chunk.js.map": "/react-gh-pages/static/js/2.092060dc.chunk.js.map",
-    "static/js/3.e712e20b.chunk.js": "/react-gh-pages/static/js/3.e712e20b.chunk.js",
-    "static/js/3.e712e20b.chunk.js.map": "/react-gh-pages/static/js/3.e712e20b.chunk.js.map",
-    "index.html": "/react-gh-pages/index.html",
-    "static/css/main.6dea0f05.chunk.css.map": "/react-gh-pages/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.092060dc.chunk.js.LICENSE.txt": "/react-gh-pages/static/js/2.092060dc.chunk.js.LICENSE.txt"
+    "main.css": "/ALOY-IT-SCHOOL/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/ALOY-IT-SCHOOL/static/js/main.225617e2.chunk.js",
+    "main.js.map": "/ALOY-IT-SCHOOL/static/js/main.225617e2.chunk.js.map",
+    "runtime-main.js": "/ALOY-IT-SCHOOL/static/js/runtime-main.263f9efc.js",
+    "runtime-main.js.map": "/ALOY-IT-SCHOOL/static/js/runtime-main.263f9efc.js.map",
+    "static/js/2.092060dc.chunk.js": "/ALOY-IT-SCHOOL/static/js/2.092060dc.chunk.js",
+    "static/js/2.092060dc.chunk.js.map": "/ALOY-IT-SCHOOL/static/js/2.092060dc.chunk.js.map",
+    "index.html": "/ALOY-IT-SCHOOL/index.html",
+    "static/css/main.6dea0f05.chunk.css.map": "/ALOY-IT-SCHOOL/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.092060dc.chunk.js.LICENSE.txt": "/ALOY-IT-SCHOOL/static/js/2.092060dc.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.1e6aaef4.js",
+    "static/js/runtime-main.263f9efc.js",
     "static/js/2.092060dc.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.0ef0e3cc.chunk.js"
+    "static/js/main.225617e2.chunk.js"
   ]
 }
