@@ -21,12 +21,11 @@ export const setUserData = (email, password) => {
     } else {
       dispatch({
         type: SET_ERROR,
-        errorMessages: response.data.messages,
+        errorMessages: response.data.fieldsErrors.length === 0 ? response.data.messages : response.data.fieldsErrors,
       });
     }
   };
 };
-
 export const clearErrorMessage = () => ({ type: CLEAR_ERROR_MESSAGES });
 
 export const logOut = () => {
@@ -34,7 +33,6 @@ export const logOut = () => {
     const response = await axios.delete(
       "https://social-network.samuraijs.com/api/1.0/auth/login",{ withCredentials: true }
     );
-    console.log(response);
     if (response.data.resultCode === 0) {
       dispatch({ type: SET_INITIAL_STATE });
     }

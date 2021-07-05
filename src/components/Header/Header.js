@@ -11,7 +11,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles } from "@material-ui/core/styles";
 import LogIn from "./LogIn";
 import { useDispatch, useSelector } from "react-redux";
-import { logOut } from "../redux/userActions";
+import { logOut } from "../../redux/userActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
