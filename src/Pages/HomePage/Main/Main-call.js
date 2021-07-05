@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Typography, Container, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PhoneSharpIcon from "@material-ui/icons/PhoneSharp";
+import Popup from "../../../components/Popup";
 
 const useStyles = makeStyles((theme) => ({
   mainContent: {
@@ -58,6 +59,14 @@ const useStyles = makeStyles((theme) => ({
 
 const CallForm = (props) => {
   const classes = useStyles();
+  const [isPressBtn, setIsPressBtn] = useState(false);
+
+  const handleClick = () => {
+    setIsPressBtn(true);
+    setTimeout(() => {
+      setIsPressBtn(false);
+    }, 1);
+  }
 
   return (
     <>
@@ -68,9 +77,10 @@ const CallForm = (props) => {
           </Typography>
         </Container>
         <Container maxWidth="sm" className={classes.callContainer}>
-          <IconButton className={classes.callIconContainer}>
+          <IconButton onClick={handleClick} className={classes.callIconContainer}>
             <PhoneSharpIcon className={classes.callIcon} />
           </IconButton>
+          <Popup isPressBtn={isPressBtn}/>
         </Container>
       </div>
     </>

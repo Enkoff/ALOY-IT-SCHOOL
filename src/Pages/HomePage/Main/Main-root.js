@@ -1,8 +1,8 @@
 import React from "react";
 import { Grid, Paper, Typography, Container, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import MainContent from "./Main-content";
-import CallForm from "./Call-form";
+import MainContent from "./Main-description";
+import CallForm from "./Main-call";
 
 const useStyles = makeStyles((theme) => ({
   main: {
