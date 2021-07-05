@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogActions,
 } from "@material-ui/core";
+import { sendEmail } from '../../../mailer-js/mailer';
 
 const Popup = ({ isPressBtn }) => {
   const [open, setOpen] = useState(false);
@@ -20,6 +21,7 @@ const Popup = ({ isPressBtn }) => {
   }, [isPressBtn]);
 
   const handleClickClouse = () => {
+    sendEmail(name, phone);
     setOpen(false);
     setName('');
     setPhone('');
