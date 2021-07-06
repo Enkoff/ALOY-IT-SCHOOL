@@ -61,6 +61,12 @@ export default function LogIn({ isLoginClick }) {
   const [open, setIsOpen] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [errorObj, setErrorObj] = useState({
+    isErrorName: false,
+    errorNameMessage: "",
+    isErrorPassword: false,
+    errorPasswordMessage: "",
+  });
 
   const { errorMessages, isAuth } = useSelector((state) => state.userReducer);
 
@@ -83,16 +89,10 @@ export default function LogIn({ isLoginClick }) {
     handleClickClouse();
   }
 
-  const [errorObj, setErrorObj] = useState({
-    isErrorName: false,
-    errorNameMessage: "",
-    isErrorPassword: false,
-    errorPasswordMessage: "",
-  });
-
   const handleLogin = () => {
     dispatch(setUserData(name, password));
   };
+
   useEffect(() => {
     setErrorObj({
       isErrorName: false,
@@ -133,9 +133,6 @@ export default function LogIn({ isLoginClick }) {
       });
     }
   }, [errorMessages]);
-
-console.log(errorMessages);
-
   
   useEffect(() => {
     if (isLoginClick) {

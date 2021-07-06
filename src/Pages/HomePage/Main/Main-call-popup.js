@@ -5,14 +5,14 @@ import {
   TextField,
   DialogTitle,
   DialogContent,
-  DialogActions,
+  DialogActions
 } from "@material-ui/core";
-import { sendEmail } from '../../../mailer-js/mailer';
+import { sendEmail } from "../../../mailer-js/mailer";
 
 const Popup = ({ isPressBtn }) => {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
 
   useEffect(() => {
     if (isPressBtn) {
@@ -23,8 +23,8 @@ const Popup = ({ isPressBtn }) => {
   const handleClickClouse = () => {
     sendEmail(name, phone);
     setOpen(false);
-    setName('');
-    setPhone('');
+    setName("");
+    setPhone("");
   };
 
   return (
@@ -60,11 +60,14 @@ const Popup = ({ isPressBtn }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClickClouse} color='secondary'>
+        <Button onClick={handleClickClouse} color="secondary">
           Закрити
         </Button>
-        <Button onClick={handleClickClouse} color='primary' >Відправити</Button>
+        <Button onClick={handleClickClouse} color="primary">
+          Відправити
+        </Button>
       </DialogActions>
+     
     </Dialog>
   );
 };
