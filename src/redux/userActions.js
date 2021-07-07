@@ -7,22 +7,26 @@ export const SET_INITIAL_STATE = "SET_INITIAL_STATE";
 
 export const setUserData = (email, password) => {
   return async (dispatch) => {
-    const response = await axios.post(
-      "https://social-network.samuraijs.com/api/1.0/auth/login",
-      { email, password }, {withCredentials: true}
-    );
-
-    if (response.data.resultCode === 0) {
-      const userId = response.data.data.userId;
-      dispatch({
-        type: SET_USER,
-        userId,
-      });
-    } else {
-      dispatch({
-        type: SET_ERROR,
-        errorMessages: response.data.fieldsErrors.length === 0 ? response.data.messages : response.data.fieldsErrors,
-      });
+    try {
+      const response = await axios.post(
+        "https://social-network.samuraijs.com/api/1.0/auth/login",
+        { email, password }, {withCredentials: true}
+      );
+  
+      if (response.data.resultCode === 0) {
+        const userId = response.data.data.userId;
+        dispatch({
+          type: SET_USER,
+          userId,
+        });
+      } else {
+        dispatch({
+          type: SET_ERROR,
+          errorMessages: response.data.fieldsErrors.length === 0 ? response.data.messages : response.data.fieldsErrors,
+        });
+      }
+    } catch (error) {
+      throw new Error(error); 
     }
   };
 };
