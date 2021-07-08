@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage:
       "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDPgxAfT8c3b8JKjue4Fp3pOfIAW-qUpeg24zw0X3xJNxr7t14mJzRhbp371KyQsfv0G0&usqp=CAU)",
     backgroundPosition: "center",
-    paddingTop: theme.spacing(5),
-    paddingBottom: theme.spacing(2),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
   },
   wrapper: {
     display: "flex",
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     color: "white",
-    marginBottom: "15px",
+    marginBottom: "10px",
   },
   icon: {
     marginRight: "15px",
@@ -33,9 +33,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    fontSize: "2.3rem",
+    fontSize: "1.3rem",
     color: "white",
-    marginBottom: theme.spacing(5),
+    marginBottom: theme.spacing(1),
   },
   addressText: {
     color: "white",
@@ -72,9 +72,6 @@ const Footer = (props) => {
           </Typography>
         </Container>
       </Container>
-      <Typography align="center" style={{ color: "white", marginTop: "20px" }}>
-        2021
-      </Typography>
     </footer>
   );
 };

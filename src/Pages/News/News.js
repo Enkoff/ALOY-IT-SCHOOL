@@ -1,11 +1,15 @@
 import React from 'react';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer';
+import NewsMain from './News-main';
 
 const News = props => {
-
     return (
-        <View style={styles.screen}>
-            <Text>News</Text>
-        </View>
+        <div>
+           <Header />
+            <NewsMain />
+           <Footer />
+       </div>
     );
 };
 

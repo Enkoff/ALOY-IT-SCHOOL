@@ -18,6 +18,7 @@ import MenuBookIcon from "@material-ui/icons/MenuBook";
 import PaymentIcon from "@material-ui/icons/Payment";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import LocalActivityIcon from "@material-ui/icons/LocalActivity";
+import { Link } from "react-router-dom";
 
 import defaultAvatar from "../../../image/user/avatar.png";
 import avatarBackground from "../../../image/user/avatar-background.jpeg";
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     WebkitBackgroundSize: "cover",
     backgroundPosition: "center",
     paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(1)
+    paddingBottom: theme.spacing(1),
   },
   avatar: {
     width: theme.spacing(8),
@@ -70,6 +71,10 @@ const useStyles = makeStyles((theme) => ({
   rangIcon: {
     color: "yellow",
   },
+  link: {
+    textDecoration: "none",
+    color: theme.palette.text.primary,
+  },
 }));
 
 const UserDrawer = ({ logOut }) => {
@@ -89,48 +94,62 @@ const UserDrawer = ({ logOut }) => {
         </ListItemIcon>
       </ListItem>
       <Divider />
-      <ListItem button>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Новини"} />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <AssignmentIndIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Профіль"} />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <ShowChartIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Рейтинг"} />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <DateRangeIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Розклад занять"} />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <MenuBookIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Учбові матеріали"} />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <HomeWorkIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Домашні завдання"} />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <PaymentIcon />
-        </ListItemIcon>
-        <ListItemText primary={"Оплата онлайн"} />
-      </ListItem>
+      <Link to="/news" className={classes.link}>
+        <ListItem button>
+          <ListItemIcon>
+            <AssignmentIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Новини"} />
+        </ListItem>
+      </Link>
+      <Link to="/profile" className={classes.link}>
+        <ListItem button>
+          <ListItemIcon>
+            <AssignmentIndIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Профіль"} />
+        </ListItem>
+      </Link>
+      <Link to="/rang" className={classes.link}>
+        <ListItem button>
+          <ListItemIcon>
+            <ShowChartIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Рейтинг"} />
+        </ListItem>
+      </Link>
+      <Link to="/time-table" className={classes.link}>
+        <ListItem button>
+          <ListItemIcon>
+            <DateRangeIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Розклад занять"} />
+        </ListItem>
+      </Link>
+      <Link to="/education-material" className={classes.link}>
+        <ListItem button>
+          <ListItemIcon>
+            <MenuBookIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Учбові матеріали"} />
+        </ListItem>
+      </Link>
+      <Link to="/home-work" className={classes.link}>
+        <ListItem button>
+          <ListItemIcon>
+            <HomeWorkIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Домашні завдання"} />
+        </ListItem>
+      </Link>
+      <Link to="/pay" className={classes.link}>
+        <ListItem button>
+          <ListItemIcon>
+            <PaymentIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Оплата онлайн"} />
+        </ListItem>
+      </Link>
       <Divider />
       <div
         style={{
