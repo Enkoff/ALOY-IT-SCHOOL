@@ -82,7 +82,7 @@ const Header = (props) => {
             ALOY School
           </Typography>
           {isAuth ? (
-            <Link to="/" className={classes.link}>
+            <Link to="/ALOY-IT-SCHOOL" className={classes.link}>
               <Button
                 onClick={handlerLogOut}
                 color="secondary"

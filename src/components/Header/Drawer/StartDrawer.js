@@ -29,7 +29,7 @@ const StartDrawer = ({closeDrawer}) => {
         <ListItemText secondary={"ТУТ БУДЕ ЛОГОТИП"} />
       </ListItem>
       <Divider />
-      <Link onClick={closeDrawer} to="/" className={classes.link}>
+      <Link onClick={closeDrawer} to="/ALOY-IT-SCHOOL" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <HomeIcon />
