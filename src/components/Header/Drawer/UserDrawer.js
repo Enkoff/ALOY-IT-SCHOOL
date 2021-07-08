@@ -8,7 +8,7 @@ import {
   ListItemText,
   Button,
   makeStyles,
-  Typography,
+  Typography
 } from "@material-ui/core/";
 import { useSelector } from "react-redux";
 import DateRangeIcon from "@material-ui/icons/DateRange";

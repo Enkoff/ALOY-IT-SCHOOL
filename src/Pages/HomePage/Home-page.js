@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { Grid, Paper, Typography, Container, Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Grid, Paper, Typography, Container, Button, makeStyles } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
 
 import MainContent from "./Home-description";
