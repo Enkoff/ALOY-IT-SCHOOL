@@ -18,28 +18,28 @@ const useStyles = makeStyles({
 
 export default function TemporaryDrawer({ isBurgerClick, logOut }) {
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const isAuth = useSelector((store) => store.userReducer.isAuth);
 
-  const toggleDrawer = () => {
-    setOpen((prev) => !prev);
+  const closeDrawer = () => {
+    setOpen(false);
   };
 
   useEffect(() => {
-    toggleDrawer();
+      setOpen(true); 
   }, [isBurgerClick]);
 
   const list = () => {
     return (
       <List className={classes.list}>
-        {!isAuth && <StartDrawer />}
-        {isAuth && <UserDrawer logOut={logOut}/>}
+        {!isAuth && <StartDrawer closeDrawer={closeDrawer}/>}
+        {isAuth && <UserDrawer closeDrawer={closeDrawer} logOut={logOut}/>}
       </List>
     );
   };
   return (
     <div>
-      <Drawer anchor="left" open={open} onClose={toggleDrawer}>
+      <Drawer anchor="left" open={open} onClose={closeDrawer}>
         {list()}
       </Drawer>
     </div>

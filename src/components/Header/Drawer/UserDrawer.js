@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserDrawer = ({ logOut }) => {
+const UserDrawer = ({ logOut, closeDrawer }) => {
   const classes = useStyles();
   const userId = useSelector((store) => store.userReducer.userId);
 
@@ -94,7 +94,7 @@ const UserDrawer = ({ logOut }) => {
         </ListItemIcon>
       </ListItem>
       <Divider />
-      <Link to="/news" className={classes.link}>
+      <Link onClick={closeDrawer} to="/news" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <AssignmentIcon />
@@ -102,7 +102,7 @@ const UserDrawer = ({ logOut }) => {
           <ListItemText primary={"Новини"} />
         </ListItem>
       </Link>
-      <Link to="/profile" className={classes.link}>
+      <Link onClick={closeDrawer} to="/profile" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <AssignmentIndIcon />
@@ -110,7 +110,7 @@ const UserDrawer = ({ logOut }) => {
           <ListItemText primary={"Профіль"} />
         </ListItem>
       </Link>
-      <Link to="/rang" className={classes.link}>
+      <Link onClick={closeDrawer} to="/rang" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <ShowChartIcon />
@@ -118,7 +118,7 @@ const UserDrawer = ({ logOut }) => {
           <ListItemText primary={"Рейтинг"} />
         </ListItem>
       </Link>
-      <Link to="/time-table" className={classes.link}>
+      <Link onClick={closeDrawer} to="/time-table" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <DateRangeIcon />
@@ -126,7 +126,7 @@ const UserDrawer = ({ logOut }) => {
           <ListItemText primary={"Розклад занять"} />
         </ListItem>
       </Link>
-      <Link to="/education-material" className={classes.link}>
+      <Link onClick={closeDrawer} to="/education-material" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <MenuBookIcon />
@@ -134,7 +134,7 @@ const UserDrawer = ({ logOut }) => {
           <ListItemText primary={"Учбові матеріали"} />
         </ListItem>
       </Link>
-      <Link to="/home-work" className={classes.link}>
+      <Link onClick={closeDrawer} to="/home-work" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <HomeWorkIcon />
@@ -142,7 +142,7 @@ const UserDrawer = ({ logOut }) => {
           <ListItemText primary={"Домашні завдання"} />
         </ListItem>
       </Link>
-      <Link to="/pay" className={classes.link}>
+      <Link onClick={closeDrawer} to="/pay" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <PaymentIcon />

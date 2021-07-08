@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StartDrawer = (props) => {
+const StartDrawer = ({closeDrawer}) => {
   const classes = useStyles();
 
   return (
@@ -28,7 +28,7 @@ const StartDrawer = (props) => {
         <ListItemText secondary={"ТУТ БУДЕ ЛОГОТИП"} />
       </ListItem>
       <Divider />
-      <Link to="/news" className={classes.link}>
+      <Link onClick={closeDrawer} to="/news" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <AssignmentIcon />
@@ -36,7 +36,7 @@ const StartDrawer = (props) => {
           <ListItemText primary={"Новини"} />
         </ListItem>
       </Link>
-      <Link to="/" className={classes.link}>
+      <Link onClick={closeDrawer} to="/" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <LayersIcon />
@@ -44,7 +44,7 @@ const StartDrawer = (props) => {
           <ListItemText primary={"Курси"} />
         </ListItem>
       </Link>
-      <Link to="/" className={classes.link}>
+      <Link onClick={closeDrawer} to="/" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <EmojiPeopleIcon />
@@ -52,7 +52,7 @@ const StartDrawer = (props) => {
           <ListItemText primary={"Контакти"} />
         </ListItem>
       </Link>
-      <Link to="/" className={classes.link}>
+      <Link onClick={closeDrawer} to="/" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <InfoIcon />
