@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import LogIn from "./LogIn";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../redux/userActions";
-import TemporaryDrawer from "../Drawer";
+import TemporaryDrawer from "./Drawer/Drawer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -88,7 +88,7 @@ const Header = (props) => {
             <LogIn isLoginClick={isLoginClick} />
           </Toolbar>
         </Container>
-        <TemporaryDrawer isBurgerClick={isBurgerClick}/>
+        <TemporaryDrawer isBurgerClick={isBurgerClick} logOut={handlerLogOut}/>
       </AppBar>
   );
 };
