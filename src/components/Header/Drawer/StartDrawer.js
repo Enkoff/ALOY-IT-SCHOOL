@@ -10,6 +10,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import InfoIcon from "@material-ui/icons/Info";
 import EmojiPeopleIcon from "@material-ui/icons/EmojiPeople";
 import LayersIcon from "@material-ui/icons/Layers";
+import HomeIcon from '@material-ui/icons/Home';
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +29,14 @@ const StartDrawer = ({closeDrawer}) => {
         <ListItemText secondary={"ТУТ БУДЕ ЛОГОТИП"} />
       </ListItem>
       <Divider />
+      <Link onClick={closeDrawer} to="/" className={classes.link}>
+        <ListItem button>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Головна"} />
+        </ListItem>
+      </Link>
       <Link onClick={closeDrawer} to="/news" className={classes.link}>
         <ListItem button>
           <ListItemIcon>

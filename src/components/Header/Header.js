@@ -13,6 +13,7 @@ import LogIn from "./LogIn";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../redux/userActions";
 import TemporaryDrawer from "./Drawer/Drawer";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,17 +31,29 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 17,
     },
   },
+  link: {
+    textDecoration: "none",
+    color: theme.palette.text.primary,
+  }
 }));
 
 const Header = (props) => {
   const [isLoginClick, setIsLoginClick] = useState(false);
-  const [isBurgerClick, setIsBurgerClick] = useState(false);
-
+  const [open, setOpen] = useState(false);
   const isAuth = useSelector((store) => store.userReducer.isAuth);
   const dispatch = useDispatch();
 
+  const closeDrawer = () => {
+    setOpen(false);
+  };
+
+  const openDrawer = () => {
+    setOpen(true);
+  };
+
   const handleClick = () => {
     setIsLoginClick(true);
+
     setTimeout(() => {
       setIsLoginClick(false);
     }, 1);
@@ -53,22 +66,23 @@ const Header = (props) => {
   const classes = useStyles();
 
   return (
-      <AppBar position="fixed">
-        <Container fixed>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-              onClick={() => setIsBurgerClick(prev => !prev)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              ALOY School
-            </Typography>
-            {isAuth ? (
+    <AppBar position="fixed">
+      <Container fixed>
+        <Toolbar>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+            onClick={openDrawer}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            ALOY School
+          </Typography>
+          {isAuth ? (
+            <Link to="/" className={classes.link}>
               <Button
                 onClick={handlerLogOut}
                 color="secondary"
@@ -76,20 +90,17 @@ const Header = (props) => {
               >
                 Вийти
               </Button>
-            ) : (
-              <Button
-                onClick={handleClick}
-                color="secondary"
-                variant="contained"
-              >
-                Увійти
-              </Button>
-            )}
-            <LogIn isLoginClick={isLoginClick} />
-          </Toolbar>
-        </Container>
-        <TemporaryDrawer isBurgerClick={isBurgerClick} logOut={handlerLogOut}/>
-      </AppBar>
+            </Link>
+          ) : (
+            <Button onClick={handleClick} color="secondary" variant="contained">
+              Увійти
+            </Button>
+          )}
+          <LogIn isLoginClick={isLoginClick} />
+        </Toolbar>
+      </Container>
+      <TemporaryDrawer open={open} closeDrawer={closeDrawer} />
+    </AppBar>
   );
 };
 

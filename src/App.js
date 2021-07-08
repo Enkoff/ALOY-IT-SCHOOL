@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
-import HomePage from "./Pages/HomePage/Home-page";
 import News from './Pages/News/News-page';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { auth } from "./redux/userActions";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer";
+import StartScreen from "./Pages/StartScreen";
 
 function App() {
   const dispatch = useDispatch();
-  const isAuth = useSelector(store => store.userReducer.isAuth);
 
   useEffect(() => {
     dispatch(auth());
@@ -20,14 +19,14 @@ function App() {
     <Router>
       <Header />
       <Switch>
-        <Route exact path='/' component={HomePage}/>
+        <Route exact path='/' component={StartScreen}/>
         <Route exact path='/news' component={News}/>
-        <Route exact path='/profile' component={HomePage}/>
-        <Route exact path='/rang' component={HomePage}/>
-        <Route exact path='/time-table' component={HomePage}/>
-        <Route exact path='/education-material' component={HomePage}/>
-        <Route exact path='/home-work' component={HomePage}/>
-        <Route exact path='/pay' component={HomePage}/>
+        <Route exact path='/profile' component={StartScreen}/>
+        <Route exact path='/rang' component={StartScreen}/>
+        <Route exact path='/time-table' component={StartScreen}/>
+        <Route exact path='/education-material' component={StartScreen}/>
+        <Route exact path='/home-work' component={StartScreen}/>
+        <Route exact path='/pay' component={StartScreen}/>
       </Switch>
       <Footer />
     </Router>

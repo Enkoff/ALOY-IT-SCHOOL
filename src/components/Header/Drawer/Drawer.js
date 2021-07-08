@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Drawer, List } from "@material-ui/core/";
 import { useSelector } from "react-redux";
@@ -9,39 +9,29 @@ import UserDrawer from "./UserDrawer";
 const useStyles = makeStyles({
   list: {
     width: 250,
-    padding: 0
+    padding: 0,
   },
   fullList: {
     width: "auto",
   },
 });
 
-export default function TemporaryDrawer({ isBurgerClick, logOut }) {
+export default function TemporaryDrawer({ open, logOut, closeDrawer }) {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
   const isAuth = useSelector((store) => store.userReducer.isAuth);
-
-  const closeDrawer = () => {
-    setOpen(false);
-  };
-
-  useEffect(() => {
-      setOpen(true); 
-  }, [isBurgerClick]);
 
   const list = () => {
     return (
       <List className={classes.list}>
-        {!isAuth && <StartDrawer closeDrawer={closeDrawer}/>}
-        {isAuth && <UserDrawer closeDrawer={closeDrawer} logOut={logOut}/>}
+        {!isAuth && <StartDrawer closeDrawer={closeDrawer} />}
+        {isAuth && <UserDrawer closeDrawer={closeDrawer} logOut={logOut} />}
       </List>
     );
   };
+
   return (
-    <div>
       <Drawer anchor="left" open={open} onClose={closeDrawer}>
         {list()}
       </Drawer>
-    </div>
   );
 }

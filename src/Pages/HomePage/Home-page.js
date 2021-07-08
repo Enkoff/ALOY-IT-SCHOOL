@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Grid, Paper, Typography, Container, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useLocation } from "react-router-dom";
@@ -22,14 +22,14 @@ const useStyles = makeStyles((theme) => ({
     backdropFilter: "blur(3px)",
     backgroundColor: "rgba(0,0,30,0.5)",
     borderRadius: "10px",
-    marginBottom: theme.spacing(4)
+    marginBottom: theme.spacing(4),
   },
 }));
 
-const Main = (props) => {
+const HomePage = (props) => {
   const classes = useStyles();
   const { pathname } = useLocation();
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -62,4 +62,4 @@ const Main = (props) => {
   );
 };
 
-export default Main;
+export default HomePage;
