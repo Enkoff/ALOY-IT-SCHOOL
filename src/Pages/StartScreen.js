@@ -5,7 +5,7 @@ import HomePage from "./HomePage/Home-page";
 import NewsPage from "./News/News-page";
 
 const StartScreen = (props) => {
-  const isAuth = useSelector((store) => store.userReducer.isAuth);
+  const isAuth = useSelector((store) => store.auth.isAuth);
   return <>{isAuth ? <NewsPage /> : <HomePage />}</>;
 };
 

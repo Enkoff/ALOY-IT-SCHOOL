@@ -1,35 +1,21 @@
 import * as userActions from "./userActions";
 
 const initialState = {
-  userId: null,
-  userName: null,
-  userImage: null,
-  errorMessages: null,
-  isAuth: false,
+  id: null,
+  avatar: null,
+  name: false,
 };
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case userActions.SET_USER:
-      return {
-        ...state,
-        isAuth: true,
-        errorMessages: null,
-        userId: action.userId,
-      };
-    case userActions.SET_ERROR:
-      return {
-        ...state,
-        errorMessages: action.errorMessages,
-        isAuth: false,
-      };
-    case userActions.CLEAR_ERROR_MESSAGES:
-      return {
-        ...state,
-        errorMessages: null,
-      };
-    case userActions.SET_INITIAL_STATE:
-      return initialState;
+        const { id, avatar, name } = action.user
+        return {
+            ...state,
+            id,
+            avatar,
+            name
+        }
     default:
       return state;
   }

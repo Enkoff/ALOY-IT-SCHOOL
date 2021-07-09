@@ -45,8 +45,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
     paddingTop: theme.spacing(0.5),
     paddingBottom: theme.spacing(0.5),
-    paddingRight: theme.spacing(1),
-    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
     borderRadius: theme.spacing(2),
     backdropFilter: "blur(3px)",
     backgroundColor: "rgba(0,0,30,0.5)",
@@ -79,14 +79,14 @@ const useStyles = makeStyles((theme) => ({
 
 const UserDrawer = ({ logOut, closeDrawer }) => {
   const classes = useStyles();
-  const userId = useSelector((store) => store.userReducer.userId);
+  const { name, avatar } = useSelector((store) => store.userReducer);
 
   return (
     <>
       <ListItem className={classes.avatarContainer}>
-        <Avatar className={classes.avatar} src={defaultAvatar} />
+        <Avatar className={classes.avatar} src={avatar} />
         <Typography className={classes.userName}>
-          {`User name:  ${userId}`}
+          {name}
         </Typography>
         <ListItemIcon className={classes.rangContainer}>
           <LocalActivityIcon className={classes.rangIcon} />

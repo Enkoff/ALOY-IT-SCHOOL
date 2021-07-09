@@ -15,7 +15,8 @@ import {
 } from "@material-ui/core";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrorMessage, setUserData } from "../../redux/userActions";
+import { clearErrorMessage } from "../../redux/userActions";
+import { logIn } from "../../redux/authActions";
 
 function Copyright() {
   return (
@@ -59,30 +60,24 @@ export default function LogIn({ isLoginClick }) {
   const dispatch = useDispatch();
 
   const [open, setIsOpen] = useState(false);
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorObj, setErrorObj] = useState({
-    isErrorName: false,
-    errorNameMessage: "",
-    isErrorPassword: false,
-    errorPasswordMessage: "",
-  });
+  const [errorObj, setErrorObj] = useState({});
 
-  const { errorMessages, isAuth } = useSelector((state) => state.userReducer);
+  const { errorData, isAuth } = useSelector((state) => state.auth);
 
   const handleClickClouse = () => {
     setErrorObj({
-      isErrorName: false,
-      errorNameMessage: "",
+      isErrorEmail: false,
       isErrorPassword: false,
+      isAnotheError: false,
+      errorEmailMessage: "",
       errorPasswordMessage: "",
+      anotherErrorMessage: "",
     });
     setIsOpen(false);
-    setName("");
+    setEmail("");
     setPassword("");
-    setTimeout(() => {
-      dispatch(clearErrorMessage());
-    }, 100);
   };
 
   if (isAuth && open) {
@@ -90,50 +85,52 @@ export default function LogIn({ isLoginClick }) {
   }
 
   const handleLogin = () => {
-    dispatch(setUserData(name, password));
+    if (email !== "" && password !== "") {
+      dispatch(logIn(email, password));
+    } else {
+      dispatch(logIn());
+    }
   };
 
   useEffect(() => {
     setErrorObj({
-      isErrorName: false,
-      errorNameMessage: "",
+      isErrorEmail: false,
       isErrorPassword: false,
+      isAnotheError: false,
+      errorEmailMessage: "",
       errorPasswordMessage: "",
+      anotherErrorMessage: "",
     });
-    if (errorMessages !== null) {
-      errorMessages.forEach((element) => {
-        if (element.field === "email") {
-          let message = "Помилка";
-          if (element.error === "Please enter your Email") {
-            message = "Будь ласка введіть своє Імя";
-          } else {
-            message = "Будь ласка введіть коректне Імя";
-          }
-          setErrorObj((prev) => {
-            return {
-              ...prev,
-              isErrorName: true,
-              errorNameMessage: message,
-            };
-          });
-        } else if (element.field === "password") {
-          let message = "Помилка";
-          if (element.error === "Enter your password") {
-            message = "Будь ласка введіть свій праоль";
-          }
-          setErrorObj((prev) => {
-            return {
-              ...prev,
-              isErrorPassword: true,
-              errorPasswordMessage: message,
-            };
-          });
-        } else {
-        }
-      });
+
+    if (errorData !== null) {
+      if (errorData.field === "email") {
+        setErrorObj((prev) => {
+          return {
+            ...prev,
+            isErrorEmail: true,
+            errorEmailMessage: errorData.message,
+          };
+        });
+      } else if (errorData.field === "password") {
+        setErrorObj((prev) => {
+          return {
+            ...prev,
+            isErrorPassword: true,
+            errorPasswordMessage: errorData.message,
+          };
+        });
+      } else {
+        setErrorObj((prev) => {
+          return {
+            ...prev,
+            isAnotheError: true,
+            anotherErrorMessage: errorData.message,
+          };
+        });
+      }
     }
-  }, [errorMessages]);
-  
+  }, [errorData]);
+
   useEffect(() => {
     if (isLoginClick) {
       setIsOpen(true);
@@ -158,16 +155,16 @@ export default function LogIn({ isLoginClick }) {
           </Typography>
           <div className={classes.form}>
             <TextField
-              error={errorObj.isErrorName}
-              helperText={errorObj.errorNameMessage}
-              onChange={(e) => setName(e.target.value)}
+              error={errorObj.isErrorEmail}
+              helperText={errorObj.errorEmailMessage}
+              onChange={(e) => setEmail(e.target.value)}
               variant="outlined"
               margin="normal"
               fullWidth
-              type="name"
-              id="name"
-              label="Імя користувача"
-              name="name"
+              type="email"
+              id="email"
+              label="Адреса електронної пошти"
+              name="email"
               autoComplete="name"
               autoFocus
             />
@@ -195,7 +192,7 @@ export default function LogIn({ isLoginClick }) {
               Увійти
             </Button>
           </div>
-          {errorMessages !== null && typeof errorMessages[0] === 'string' && <p style={{color: 'red'}}>Не коректне Імя або Пароль</p>}
+          {errorObj.isAnotheError && <p style={{color: 'red'}}>{errorObj.anotherErrorMessage}</p>}
         </div>
         <Box mt={8}>
           <Copyright />

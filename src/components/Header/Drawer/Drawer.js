@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 
 export default function TemporaryDrawer({ open, logOut, closeDrawer }) {
   const classes = useStyles();
-  const isAuth = useSelector((store) => store.userReducer.isAuth);
+  const isAuth = useSelector((store) => store.auth.isAuth);
 
   const list = () => {
     return (

@@ -11,7 +11,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles } from "@material-ui/core/styles";
 import LogIn from "./LogIn";
 import { useDispatch, useSelector } from "react-redux";
-import { logOut } from "../../redux/userActions";
+import { logOut } from "../../redux/authActions";
 import TemporaryDrawer from "./Drawer/Drawer";
 import { Link } from "react-router-dom";
 
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const Header = (props) => {
   const [isLoginClick, setIsLoginClick] = useState(false);
   const [open, setOpen] = useState(false);
-  const isAuth = useSelector((store) => store.userReducer.isAuth);
+  const isAuth = useSelector((store) => store.auth.isAuth);
   const dispatch = useDispatch();
 
   const closeDrawer = () => {
