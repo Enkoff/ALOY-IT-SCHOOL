@@ -99,7 +99,7 @@ const Header = (props) => {
           <LogIn isLoginClick={isLoginClick} />
         </Toolbar>
       </Container>
-      <TemporaryDrawer open={open} closeDrawer={closeDrawer} />
+      <TemporaryDrawer open={open} logOut={handlerLogOut} closeDrawer={closeDrawer} />
     </AppBar>
   );
 };
