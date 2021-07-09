@@ -20,7 +20,7 @@ function App() {
     <Router>
       <Header />
       <Switch>
-        <Route exact path="/ALOY-IT-SCHOOL" component={StartScreen} />
+        <Route exact path="/" component={StartScreen} />
         <Route exact path="/news" component={News} />
         <Route exact path="/profile" component={ProfilePage} />
         <Route exact path="/rang" component={StartScreen} />

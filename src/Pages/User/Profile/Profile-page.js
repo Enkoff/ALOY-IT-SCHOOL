@@ -52,13 +52,16 @@ const useStyles = makeStyles((theme) => ({
     right: theme.spacing(1),
     bottom: theme.spacing(1),
   },
+  changePhotoIcon: {
+    color: 'red'
+  }
 }));
 
 const ProfilePage = (props) => {
   const classes = useStyles();
   const { pathname } = useLocation();
 
-  const userId = useSelector((store) => store.userReducer.userId);
+  const { name, avatar } = useSelector((store) => store.userReducer);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -68,14 +71,14 @@ const ProfilePage = (props) => {
     <>
       <div className={classes.headerContainer}>
         <Paper className={classes.profileHeader}></Paper>
-        <Avatar className={classes.avatar} />
+        <Avatar className={classes.avatar} src={avatar}/>
         <Container className={classes.avatarContainer}>
           <IconButton className={classes.chngePhoto}>
-            <PhotoCameraIcon color='inherit' fontSize='large' className={classes.changePhotoIcon}/>
+            <PhotoCameraIcon fontSize='large' className={classes.changePhotoIcon}/>
           </IconButton>
         </Container>
       </div>
-      <Typography align="center">{`USER NAME: ${userId}`}</Typography>
+      <Typography align="center">{name}</Typography>
     </>
   );
 };
