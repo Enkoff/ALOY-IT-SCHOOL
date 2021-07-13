@@ -69,7 +69,6 @@ export const logOut = () => {
 
 export const auth = () => {
   return async (dispatch) => {
-    console.log("AUTH ERROR");
     FB.auth().onAuthStateChanged((user) => {
       if (user) {
         dispatch({

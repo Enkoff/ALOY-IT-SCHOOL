@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Paper,
   Typography,
@@ -10,7 +10,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
-import AvatarPopup from './Profile-change-photo/'
+import AvatarPopup from './Profile-change-photo';
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
@@ -50,9 +50,6 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     right: theme.spacing(1),
     bottom: theme.spacing(1),
-  },
-  changePhotoIcon: {
-    color: 'red'
   }
 }));
 
@@ -61,10 +58,19 @@ const ProfilePage = (props) => {
   const { pathname } = useLocation();
 
   const { name, avatar } = useSelector((store) => store.userReducer);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  const openPopup = () => {
+    setIsOpen(true);
+  }
+
+  const closePopup = () => {
+    setIsOpen(false);
+  }
 
   return (
     <>
@@ -72,12 +78,13 @@ const ProfilePage = (props) => {
         <Paper className={classes.profileHeader}></Paper>
         <Avatar className={classes.avatar} src={avatar}/>
         <Container className={classes.avatarContainer}>
-          <IconButton className={classes.chngePhoto}>
-            <PhotoCameraIcon fontSize='large' className={classes.changePhotoIcon}/>
+          <IconButton className={classes.chngePhoto} onClick={openPopup}>
+            <PhotoCameraIcon fontSize='large' color='secondary' />
           </IconButton>
         </Container>
       </div>
       <Typography align="center">{name}</Typography>
+      <AvatarPopup open={isOpen} closePopup={closePopup}/>
     </>
   );
 };

@@ -16,6 +16,11 @@ export const userReducer = (state = initialState, action) => {
             avatar,
             name
         }
+    case userActions.CHANGE_AVATAR:
+      return {
+        ...state,
+        avatar: action.avatarUrl
+      }
     default:
       return state;
   }

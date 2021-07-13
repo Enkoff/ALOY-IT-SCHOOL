@@ -20,7 +20,6 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import LocalActivityIcon from "@material-ui/icons/LocalActivity";
 import { Link } from "react-router-dom";
 
-import defaultAvatar from "../../../image/user/avatar.png";
 import avatarBackground from "../../../image/user/avatar-background.jpeg";
 
 const useStyles = makeStyles((theme) => ({

@@ -1,16 +1,18 @@
 import React, { useRef, useState } from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Avatar } from "@material-ui/core";
-
-import { useSelector } from "react-redux";
-
-import FB from "../../../Fierbase/FB";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Avatar,
+  IconButton,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import SaveIcon from '@material-ui/icons/Save';
+import { changeAvatar } from "../../../redux/userActions";
+import AcceptIcon from '../../../components/AcceptCircle';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -22,50 +24,53 @@ const useStyles = makeStyles((theme) => ({
   input: {
     display: "none",
   },
+  btn: {
+    width: theme.spacing(5),
+    height: theme.spacing(5),
+  },
+  btnExit: {
+    color: "red",
+  },
+  btnAdd: {
+    color: "green",
+    transition: "1s",
+  },
 }));
 
 export default function ResponsiveDialog({ open, closePopup }) {
   const classes = useStyles();
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const avatar = useSelector((store) => store.userReducer.avatar);
-  const newImg = useRef(null);
-
-  const addImage = () => {
-    if (newImg !== null) {
-      const storageRef = FB.storage().ref();
-      const imageRef = storageRef.child(`image/1.jpg`);
-      imageRef
-        .put(newImg.current.files[0])
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      console.log(storageRef);
-      // setNewImg()
-    }
-  };
+  const dispatch = useDispatch();
+  const [newAvatar, setNewAvatar] = useState(null);
+  const { avatar, id } = useSelector((store) => store.userReducer);
+  let imgRef = useRef(null);
 
   const clousePopupAndClearImg = () => {
     closePopup();
-    newImg = null;
+    setTimeout(() => {
+      imgRef = null;
+      setNewAvatar(null);
+    }, 1000);
+  };
+
+  const changeFile = (e) => {
+    const output = URL.createObjectURL(e.target.files[0]);
+    setNewAvatar(output);
+  };
+
+  const changeUserAvatar = async () => {
+    if (imgRef !== null) {
+      await dispatch(changeAvatar(id, avatar, imgRef));
+    }
   };
 
   return (
     <div>
       <Dialog
         className={classes.root}
-        fullScreen={fullScreen}
         open={open}
         onClose={clousePopupAndClearImg}
         aria-labelledby="responsive-dialog-title"
       >
-        <DialogTitle id="responsive-dialog-title">
-          {"ВИ БАЖАЄТЕ ЗМІНТИ ФОТО?"}
-        </DialogTitle>
         <DialogContent
           style={{
             display: "flex",
@@ -74,27 +79,44 @@ export default function ResponsiveDialog({ open, closePopup }) {
             alignItems: "center",
           }}
         >
-          <Avatar className={classes.avatar} src={avatar} />
+          <Avatar
+            className={classes.avatar}
+            src={newAvatar === null ? avatar : newAvatar}
+          />
           <input
             accept="image/*"
             className={classes.input}
             id="icon-button-file"
             type="file"
-            ref={newImg}
+            ref={imgRef}
+            onChange={changeFile}
           />
           <label htmlFor="icon-button-file">
-            <Button aria-label="upload picture" component="span" variant="contained" color="primary">
+            <Button
+              aria-label="upload picture"
+              component="span"
+              variant="contained"
+              color="primary"
+            >
               Вибрати нове фото
             </Button>
           </label>
         </DialogContent>
         <DialogActions style={{ display: "flex", justifyContent: "center" }}>
-          <Button onClick={clousePopupAndClearImg} color="primary">
-            Відмінити
-          </Button>
-          <Button onClick={addImage} color="primary" autoFocus>
-            Зберегти
-          </Button>
+          <IconButton onClick={clousePopupAndClearImg}>
+            <HighlightOffIcon className={`${classes.btnExit} ${classes.btn}`} />
+          </IconButton>
+          <AcceptIcon Icon={SaveIcon} closePopup={clousePopupAndClearImg} changeUserAvatar={changeUserAvatar} />
+          {/* <IconButton
+            disabled={newAvatar === null ? true : false}
+            onClick={changeUserAvatar}
+          >
+            <CheckCircleOutlineIcon
+              className={`${classes.btn} ${
+                newAvatar !== null && classes.btnAdd
+              }`}
+            />
+          </IconButton> */}
         </DialogActions>
       </Dialog>
     </div>
