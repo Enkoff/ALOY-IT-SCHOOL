@@ -12,3 +12,8 @@ export const setUser = (uid) => {
         });
     }
 }
+
+export const changeAvatar = (newAvatar) => {
+    const storeg = FB.storage();
+    console.log(storeg);
+}

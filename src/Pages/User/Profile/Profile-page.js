@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import {
-  Grid,
   Paper,
   Typography,
   Container,
-  Button,
   makeStyles,
   Avatar,
   IconButton,
@@ -12,6 +10,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
+import AvatarPopup from './Profile-change-photo/'
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {

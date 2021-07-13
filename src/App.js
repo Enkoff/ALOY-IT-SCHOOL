@@ -12,7 +12,7 @@ import { auth } from "./redux/authActions";
 function App() {
   const dispatch = useDispatch();
 
-  useEffect( async () => {
+  useEffect(() => {
    dispatch(auth());
   }, [dispatch]);
 

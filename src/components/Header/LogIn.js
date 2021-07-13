@@ -15,7 +15,6 @@ import {
 } from "@material-ui/core";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrorMessage } from "../../redux/userActions";
 import { logIn } from "../../redux/authActions";
 
 function Copyright() {

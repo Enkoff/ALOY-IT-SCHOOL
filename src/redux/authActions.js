@@ -41,8 +41,12 @@ export const logIn = (email, password) => {
           errorData.field = "password";
           errorData.message = "не вірний пароль";
           break;
+        case "auth/network-request-failed":
         default:
           errorData.field = "email and password";
+          if ("auth/network-request-failed") {
+            errorData.message = 'не має звязку з інтернетом'
+          }
           errorData.message = error.code;
           break;
       }
