@@ -1,22 +1,21 @@
 {
   "files": {
     "main.css": "/ALOY-IT-SCHOOL/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/ALOY-IT-SCHOOL/static/js/main.8b78efaa.chunk.js",
-    "main.js.map": "/ALOY-IT-SCHOOL/static/js/main.8b78efaa.chunk.js.map",
+    "main.js": "/ALOY-IT-SCHOOL/static/js/main.ace94477.chunk.js",
+    "main.js.map": "/ALOY-IT-SCHOOL/static/js/main.ace94477.chunk.js.map",
     "runtime-main.js": "/ALOY-IT-SCHOOL/static/js/runtime-main.263f9efc.js",
     "runtime-main.js.map": "/ALOY-IT-SCHOOL/static/js/runtime-main.263f9efc.js.map",
-    "static/js/2.69303e86.chunk.js": "/ALOY-IT-SCHOOL/static/js/2.69303e86.chunk.js",
-    "static/js/2.69303e86.chunk.js.map": "/ALOY-IT-SCHOOL/static/js/2.69303e86.chunk.js.map",
+    "static/js/2.8473851b.chunk.js": "/ALOY-IT-SCHOOL/static/js/2.8473851b.chunk.js",
+    "static/js/2.8473851b.chunk.js.map": "/ALOY-IT-SCHOOL/static/js/2.8473851b.chunk.js.map",
     "index.html": "/ALOY-IT-SCHOOL/index.html",
     "static/css/main.6dea0f05.chunk.css.map": "/ALOY-IT-SCHOOL/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.69303e86.chunk.js.LICENSE.txt": "/ALOY-IT-SCHOOL/static/js/2.69303e86.chunk.js.LICENSE.txt",
-    "static/media/avatar-background.769ce2d9.jpeg": "/ALOY-IT-SCHOOL/static/media/avatar-background.769ce2d9.jpeg",
-    "static/media/avatar.3468e99e.png": "/ALOY-IT-SCHOOL/static/media/avatar.3468e99e.png"
+    "static/js/2.8473851b.chunk.js.LICENSE.txt": "/ALOY-IT-SCHOOL/static/js/2.8473851b.chunk.js.LICENSE.txt",
+    "static/media/avatar-background.769ce2d9.jpeg": "/ALOY-IT-SCHOOL/static/media/avatar-background.769ce2d9.jpeg"
   },
   "entrypoints": [
     "static/js/runtime-main.263f9efc.js",
-    "static/js/2.69303e86.chunk.js",
+    "static/js/2.8473851b.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.8b78efaa.chunk.js"
+    "static/js/main.ace94477.chunk.js"
   ]
 }
