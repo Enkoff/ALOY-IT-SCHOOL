@@ -23,7 +23,7 @@ function App() {
         <Route exact path="/" component={StartScreen} />
         <Route exact path="/news" component={News} />
         <Route exact path="/profile" component={ProfilePage} />
-        <Route exact path="/rang" component={StartScreen} />
+        <Route exact path="rang" component={StartScreen} />
         <Route exact path="/time-table" component={StartScreen} />
         <Route exact path="/education-material" component={StartScreen} />
         <Route exact path="/home-work" component={StartScreen} />
