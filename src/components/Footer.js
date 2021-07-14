@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
     [theme.breakpoints.down(600)]: {
-        flexDirection: 'column',
+      flexDirection: "column",
     },
   },
   footerText: {

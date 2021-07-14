@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
   buttonProgress: {
     color: green[500],
     position: "absolute",
-    top: "50%",
-    left: "50%",
+    top: "30%",
+    left: "30%",
     marginTop: -12,
     marginLeft: -12,
   },
@@ -60,7 +60,7 @@ export default function CircularIntegration({
       setLoading(false);
       setTimeout(() => {
         closePopup();
-      }, 1000);
+      }, 700);
     }
   };
 

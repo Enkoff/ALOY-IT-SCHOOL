@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   profileHeader: {
     paddingTop: theme.spacing(10),
     paddingBottom: theme.spacing(10),
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(7),
     marginBottom: theme.spacing(10),
     color: theme.palette.common.white,
     backgroundImage: `url(https://mammothtech.io/wp-content/uploads/2018/02/header-bg.png)`,
@@ -76,14 +76,14 @@ const ProfilePage = (props) => {
     <>
       <div className={classes.headerContainer}>
         <Paper className={classes.profileHeader}></Paper>
-        <Avatar className={classes.avatar} src={avatar}/>
+        <Avatar className={classes.avatar} src={avatar} alt={name} />
         <Container className={classes.avatarContainer}>
           <IconButton className={classes.chngePhoto} onClick={openPopup}>
             <PhotoCameraIcon fontSize='large' color='secondary' />
           </IconButton>
         </Container>
       </div>
-      <Typography align="center">{name}</Typography>
+      <Typography variant='h5' align="center">{name}</Typography>
       <AvatarPopup open={isOpen} closePopup={closePopup}/>
     </>
   );

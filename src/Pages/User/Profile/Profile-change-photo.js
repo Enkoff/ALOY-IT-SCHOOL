@@ -10,11 +10,14 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import SaveIcon from '@material-ui/icons/Save';
+import SaveIcon from "@material-ui/icons/Save";
 import { changeAvatar } from "../../../redux/userActions";
-import AcceptIcon from '../../../components/AcceptCircle';
+import AcceptIcon from "../../../components/AcceptCircle";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    marginBottom: "14rem",
+  },
   avatar: {
     width: theme.spacing(18),
     height: theme.spacing(18),
@@ -30,11 +33,12 @@ const useStyles = makeStyles((theme) => ({
   },
   btnExit: {
     color: "red",
+    width: theme.spacing(8),
+    height: theme.spacing(8)
   },
-  btnAdd: {
-    color: "green",
-    transition: "1s",
-  },
+  disable: {
+    pointerEvents: 'none',
+  }
 }));
 
 export default function ResponsiveDialog({ open, closePopup }) {
@@ -62,7 +66,6 @@ export default function ResponsiveDialog({ open, closePopup }) {
       await dispatch(changeAvatar(id, avatar, imgRef));
     }
   };
-
   return (
     <div>
       <Dialog
@@ -106,17 +109,13 @@ export default function ResponsiveDialog({ open, closePopup }) {
           <IconButton onClick={clousePopupAndClearImg}>
             <HighlightOffIcon className={`${classes.btnExit} ${classes.btn}`} />
           </IconButton>
-          <AcceptIcon Icon={SaveIcon} closePopup={clousePopupAndClearImg} changeUserAvatar={changeUserAvatar} />
-          {/* <IconButton
-            disabled={newAvatar === null ? true : false}
-            onClick={changeUserAvatar}
-          >
-            <CheckCircleOutlineIcon
-              className={`${classes.btn} ${
-                newAvatar !== null && classes.btnAdd
-              }`}
+          <div className={imgRef.current === null ? classes.disable : ''} >
+            <AcceptIcon
+              Icon={SaveIcon}
+              closePopup={clousePopupAndClearImg}
+              changeUserAvatar={changeUserAvatar}
             />
-          </IconButton> */}
+          </div>
         </DialogActions>
       </Dialog>
     </div>

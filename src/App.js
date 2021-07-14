@@ -7,29 +7,30 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer";
 import StartScreen from "./Pages/StartScreen";
 import ProfilePage from "./Pages/User/Profile/Profile-page";
+import Dashboard from "./Pages/User/Dashboard/Dashboard";
 import { auth } from "./redux/authActions";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-   dispatch(auth());
+    dispatch(auth());
   }, [dispatch]);
 
   return (
     <Router>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={StartScreen} />
-        <Route exact path="/news" component={News} />
-        <Route exact path="/profile" component={ProfilePage} />
-        <Route exact path="rang" component={StartScreen} />
-        <Route exact path="/time-table" component={StartScreen} />
-        <Route exact path="/education-material" component={StartScreen} />
-        <Route exact path="/home-work" component={StartScreen} />
-        <Route exact path="/pay" component={StartScreen} />
-      </Switch>
-      <Footer />
+        <Header />
+        <Switch>
+          <Route exact path="/" component={StartScreen} />
+          <Route exact path="/news" component={News} />
+          <Route exact path="/profile" component={ProfilePage} />
+          <Route exact path="/rang" component={Dashboard} />
+          <Route exact path="/time-table" component={StartScreen} />
+          <Route exact path="/education-material" component={StartScreen} />
+          <Route exact path="/home-work" component={StartScreen} />
+          <Route exact path="/pay" component={StartScreen} />
+        </Switch>
+        <Footer />
     </Router>
   );
 }
