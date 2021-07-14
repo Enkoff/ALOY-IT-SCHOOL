@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import StartScreen from "./Pages/StartScreen";
 import ProfilePage from "./Pages/User/Profile/Profile-page";
 import Dashboard from "./Pages/User/Dashboard/Dashboard";
+import Schedule from "./Pages/User/Schedule/Schedule";
 import { auth } from "./redux/authActions";
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
           <Route exact path="/news" component={News} />
           <Route exact path="/profile" component={ProfilePage} />
           <Route exact path="/rang" component={Dashboard} />
-          <Route exact path="/time-table" component={StartScreen} />
+          <Route exact path="/schedule" component={Schedule} />
           <Route exact path="/education-material" component={StartScreen} />
           <Route exact path="/home-work" component={StartScreen} />
           <Route exact path="/pay" component={StartScreen} />

@@ -117,7 +117,7 @@ const UserDrawer = ({ logOut, closeDrawer }) => {
           <ListItemText primary={"Рейтинг"} />
         </ListItem>
       </Link>
-      <Link onClick={closeDrawer} to="/time-table" className={classes.link}>
+      <Link onClick={closeDrawer} to="/schedule" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <DateRangeIcon />

@@ -64,7 +64,7 @@ const Footer = (props) => {
           <Typography className={classes.footerTitle}>Наша адресса</Typography>
           <Typography className={classes.footerText}>
             <MailOutlineIcon className={classes.icon} />
-            programm_scholl_le@ukr.net
+            aloyitschool@gmail.com
           </Typography>
           <Typography className={classes.footerText}>
             <HomeIcon className={classes.icon} />

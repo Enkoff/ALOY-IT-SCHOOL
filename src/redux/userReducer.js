@@ -5,6 +5,7 @@ const initialState = {
   avatar: null,
   reating: null,
   name: false,
+  calendar: null
 };
 
 export const userReducer = (state = initialState, action) => {

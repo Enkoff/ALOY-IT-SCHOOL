@@ -66,8 +66,11 @@ const useStyles = makeStyles((theme) => ({
   userRang: {
     backgroundColor: "rgba(0, 0, 0, 0.5);",
     color: "yellow",
+    width: "25%",
     fontSize: theme.spacing(3),
-    width: "30%",
+    [theme.breakpoints.down(600)]: {
+      width: "60%",
+    },
     borderRadius: "8px",
     textAlign: "center",
   },
@@ -104,7 +107,7 @@ const Dashboard = (props) => {
       <Slide
         direction="down"
         timeout={{
-          enter: 2000,
+          enter: 1500,
         }}
         in={true}
         mountOnEnter
@@ -119,10 +122,10 @@ const Dashboard = (props) => {
           >
             Топ 5 студентів
           </Typography>
-          <AvatarGroup spacing="small" max={5}>
+          <AvatarGroup spacing="small" max={6}>
             {users.length !== 0 &&
               users.map((el) => (
-                <div key={el.avatar} className={classes.avatarContainer}>
+                <div key={el.id} className={classes.avatarContainer}>
                   <Avatar
                     className={classes.avatar}
                     alt={el.name}
@@ -145,7 +148,7 @@ const Dashboard = (props) => {
       <Zoom
         direction="left"
         timeout={{
-          enter: 2000,
+          enter: 1500,
         }}
         in={true}
         mountOnEnter
@@ -183,7 +186,7 @@ const Dashboard = (props) => {
       <Slide
         direction="right"
         timeout={{
-          enter: 2000,
+          enter: 1500,
         }}
         in={true}
         mountOnEnter

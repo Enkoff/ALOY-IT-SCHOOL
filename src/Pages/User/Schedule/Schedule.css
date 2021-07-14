@@ -1,0 +1,41 @@
+.calendarContainer {
+  margin-top: 5rem;
+  padding: 1rem 8rem;
+}
+.day-lessons-name {
+  background-color: #7900b0;
+  font-size: 15px;
+}
+.teacher {
+  background-color: #6495ed;
+  font-size: 15px;
+}
+.lesson {
+  background-color: #3cb371;
+  font-size: 15px;
+  border: none;
+}
+.break {
+  background-color: #ff6347;
+  font-size: 15px;
+  border: none;
+}
+.fc .fc-button-group > .fc-button:focus, .fc .fc-button-group > .fc-button:active, .fc .fc-button-group > .fc-button.fc-button-active  {
+  background-color: rgb(144, 0, 255);
+}
+.fc .fc-dayGridMonth-button .fc-button-active {
+  background-color: rgb(111, 0, 255);
+}
+
+@media screen and (max-width: 750px) {
+  .fc .fc-toolbar-title {
+    font-size: 0.65rem;
+  }
+  .fc .fc-button {
+    padding: .2rem .2rem;
+  }
+  .calendarContainer {
+    margin-top: 4rem;
+    padding: 1rem 0.2rem;
+  }
+}
