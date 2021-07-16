@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(15),
     paddingBottom: theme.spacing(12),
     margin: 0,
-    height: "50vh",
+    height: "68vh",
     backgroundImage:
       "url(https://i.pinimg.com/originals/40/e1/1c/40e11ca3441e08e092ae5b778c2eda31.jpg)",
     backgroundRepeat: "no-repeat",
@@ -66,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
   userRang: {
     backgroundColor: "rgba(0, 0, 0, 0.5);",
     color: "yellow",
+    height: '10vh',
     width: "25%",
     fontSize: theme.spacing(3),
     [theme.breakpoints.down(600)]: {
@@ -156,7 +157,7 @@ const Dashboard = (props) => {
       >
         <div
           style={{
-            height: "30vh",
+            height: "33vh",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
