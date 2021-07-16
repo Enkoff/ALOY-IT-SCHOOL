@@ -3,7 +3,7 @@ import * as authActions from "./authActions";
 const initialState = {
   uid: null,
   errorData: null,
-  isAuth: false,
+  isAuth: false
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -12,6 +12,7 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         errorMessage: null,
+        role: action.role,
         uid: action.uid,
         isAuth: true,
       };

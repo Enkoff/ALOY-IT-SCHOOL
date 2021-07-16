@@ -52,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     right: "1px",
   },
+  link: {
+    textDecoration: "none",
+    color: theme.palette.text.primary,
+  },
 }));
 
 export default function LogIn({ isLoginClick }) {
@@ -191,7 +195,9 @@ export default function LogIn({ isLoginClick }) {
               Увійти
             </Button>
           </div>
-          {errorObj.isAnotheError && <p style={{color: 'red'}}>{errorObj.anotherErrorMessage}</p>}
+          {errorObj.isAnotheError && (
+            <p style={{ color: "red" }}>{errorObj.anotherErrorMessage}</p>
+          )}
         </div>
         <Box mt={8}>
           <Copyright />

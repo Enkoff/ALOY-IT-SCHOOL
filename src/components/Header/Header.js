@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
     color: theme.palette.text.primary,
-  }
+  },
 }));
 
 const Header = (props) => {
@@ -61,6 +61,7 @@ const Header = (props) => {
 
   const handlerLogOut = () => {
     dispatch(logOut());
+    closeDrawer();
   };
 
   const classes = useStyles();
@@ -82,7 +83,7 @@ const Header = (props) => {
             ALOY School
           </Typography>
           {isAuth ? (
-            <Link to="/ALOY-IT-SCHOOL" className={classes.link}>
+            <Link to="/" className={classes.link}>
               <Button
                 onClick={handlerLogOut}
                 color="secondary"
@@ -99,7 +100,11 @@ const Header = (props) => {
           <LogIn isLoginClick={isLoginClick} />
         </Toolbar>
       </Container>
-      <TemporaryDrawer open={open} logOut={handlerLogOut} closeDrawer={closeDrawer} />
+      <TemporaryDrawer
+        open={open}
+        logOut={handlerLogOut}
+        closeDrawer={closeDrawer}
+      />
     </AppBar>
   );
 };

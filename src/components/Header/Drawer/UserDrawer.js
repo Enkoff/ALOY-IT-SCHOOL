@@ -8,7 +8,7 @@ import {
   ListItemText,
   Button,
   makeStyles,
-  Typography
+  Typography,
 } from "@material-ui/core/";
 import { useSelector } from "react-redux";
 import DateRangeIcon from "@material-ui/icons/DateRange";
@@ -19,6 +19,7 @@ import PaymentIcon from "@material-ui/icons/Payment";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import LocalActivityIcon from "@material-ui/icons/LocalActivity";
 import { Link } from "react-router-dom";
+import { average } from "../../../module/avarage";
 
 import avatarBackground from "../../../image/user/avatar-background.jpeg";
 
@@ -78,18 +79,18 @@ const useStyles = makeStyles((theme) => ({
 
 const UserDrawer = ({ logOut, closeDrawer }) => {
   const classes = useStyles();
-  const { name, avatar } = useSelector((store) => store.userReducer);
+  const { name, avatar, reating } = useSelector((store) => store.userReducer);
 
   return (
     <>
       <ListItem className={classes.avatarContainer}>
         <Avatar className={classes.avatar} src={avatar} />
-        <Typography className={classes.userName}>
-          {name}
-        </Typography>
+        <Typography className={classes.userName}>{name}</Typography>
         <ListItemIcon className={classes.rangContainer}>
           <LocalActivityIcon className={classes.rangIcon} />
-          <Typography className={classes.rangValue}>4.5/5</Typography>
+          <Typography className={classes.rangValue}>
+            ${average(reating).toFixed(1)}/5
+          </Typography>
         </ListItemIcon>
       </ListItem>
       <Divider />
@@ -125,7 +126,11 @@ const UserDrawer = ({ logOut, closeDrawer }) => {
           <ListItemText primary={"Розклад занять"} />
         </ListItem>
       </Link>
-      <Link onClick={closeDrawer} to="/education-material" className={classes.link}>
+      <Link
+        onClick={closeDrawer}
+        to="/education-material"
+        className={classes.link}
+      >
         <ListItem button>
           <ListItemIcon>
             <MenuBookIcon />
@@ -158,9 +163,11 @@ const UserDrawer = ({ logOut, closeDrawer }) => {
           marginTop: "1rem",
         }}
       >
-        <Button onClick={logOut} color="primary" variant="contained">
-          Вийти
-        </Button>
+        <Link to="/" className={classes.link}>
+          <Button onClick={logOut} color="primary" variant="contained">
+            Вийти
+          </Button>
+        </Link>
       </div>
     </>
   );

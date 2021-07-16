@@ -1,5 +1,5 @@
 import FB from "../Fierbase/FB";
-import * as userActions from './userActions';
+import * as userActions from "./userActions";
 
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
@@ -45,7 +45,7 @@ export const logIn = (email, password) => {
         default:
           errorData.field = "email and password";
           if ("auth/network-request-failed") {
-            errorData.message = 'не має звязку з інтернетом'
+            errorData.message = "не має звязку з інтернетом";
           }
           errorData.message = error.code;
           break;
@@ -71,11 +71,19 @@ export const auth = () => {
   return async (dispatch) => {
     FB.auth().onAuthStateChanged((user) => {
       if (user) {
-        dispatch({
-          type: LOGIN,
-          uid: user.uid,
-        });
-        dispatch(userActions.setUser(user.uid));
+        const createUserTime = new Date(user.metadata.creationTime).getTime();
+        const timeNow = new Date().getTime();
+        if (timeNow - createUserTime > 30000) {
+          dispatch({
+            type: LOGIN,
+            uid: user.uid,
+          });
+          dispatch(userActions.setUser(user.uid));
+        } else {
+          dispatch({
+            type: SET_INITIAL_STATE,
+          });
+        }
       } else {
         dispatch({
           type: SET_INITIAL_STATE,

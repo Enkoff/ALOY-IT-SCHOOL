@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { makeStyles, Avatar, Typography, Slide, Zoom } from "@material-ui/core";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
-import FB from "../../../Fierbase/FB";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsersReating } from "../../../redux/userActions";
+
+import { average } from "../../../module/avarage";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   userRang: {
     backgroundColor: "rgba(0, 0, 0, 0.5);",
     color: "yellow",
-    height: '10vh',
+    height: "10vh",
     width: "25%",
     fontSize: theme.spacing(3),
     [theme.breakpoints.down(600)]: {
@@ -79,29 +81,20 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = (props) => {
   const classes = useStyles();
-  const [users, setUsers] = useState([]);
-  const { name, avatar, reating, id } = useSelector(
-    (store) => store.userReducer
-  );
+  const dispatch = useDispatch();
+  const {
+    name,
+    avatar,
+    reating,
+    id,
+    role,
+    reatingUsersData,
+    userReatingAverage,
+  } = useSelector((store) => store.userReducer);
 
   useEffect(() => {
-    const getUsers = async () => {
-      const users = await FB.firestore().collection("users").get();
-      let newUsersArray = [];
-      users.forEach((u) => {
-        newUsersArray.push(u.data());
-      });
-      newUsersArray.sort((a, b) => average(b.reating) - average(a.reating));
-      setUsers(newUsersArray);
-    };
-    getUsers();
-  }, []);
-
-  const average = (nums) => {
-    if (nums !== null) {
-      return nums.reduce((a, b) => a + b) / nums.length;
-    }
-  };
+    dispatch(getUsersReating(id, role));
+  }, [dispatch,id, role]);
 
   return (
     <div className={classes.root}>
@@ -124,8 +117,8 @@ const Dashboard = (props) => {
             Топ 5 студентів
           </Typography>
           <AvatarGroup spacing="small" max={6}>
-            {users.length !== 0 &&
-              users.map((el) => (
+            {reatingUsersData !== null &&
+              reatingUsersData.map((el) => (
                 <div key={el.id} className={classes.avatarContainer}>
                   <Avatar
                     className={classes.avatar}
@@ -176,8 +169,8 @@ const Dashboard = (props) => {
             variant="button"
             color="primary"
           >
-            Вітаю ти знаходишсья на {users.findIndex((el) => el.id === id) + 1}{" "}
-            місці
+            Вітаю ти знаходишсья на{" "}
+            {reatingUsersData !== null && reatingUsersData.findIndex((el) => el.id === id) + 1} місці
           </Typography>
           <div className={classes.userContainer}>
             <Avatar className={classes.userAvatar} alt={name} src={avatar} />
@@ -200,10 +193,10 @@ const Dashboard = (props) => {
           color="primary"
         >
           Твій рейтинг &#10026;
-          {average(reating).toFixed(1)}
+          {userReatingAverage !== null && userReatingAverage}
           <Typography>
             кількість набраних балів
-            {reating.reduce((a, b) => a + b)}
+            {reating !== null && reating.length !== 0 && reating.reduce((a, b) => a + b)}
           </Typography>
         </Typography>
       </Slide>

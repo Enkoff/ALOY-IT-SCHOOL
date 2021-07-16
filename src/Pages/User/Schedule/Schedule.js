@@ -1,33 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from '@fullcalendar/list';
-import FB from "../../../Fierbase/FB";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getClalendarData } from "../../../redux/userActions";
 import './Schedule.css';
-import add from './addCalendarData';
 
 const Schedule = (props) => {
-  const [calendarData, setCalendarData] = useState([]);
+  const dispatch = useDispatch()
+  const { role, calendar } = useSelector(state => state.userReducer);
 
   useEffect(() => {
-      add('A1','2021','2021-07-12')
-    const getCalendarData = async () => {
-      let newArray = [];
-      const calendarData = await FB.firestore()
-        .collection("calendar")
-        .doc("A1")
-        .collection("2021")
-        .get();
-
-      calendarData.docs.forEach((el) => {
-        newArray.push(...el.data().calendarData);
-      });
-
-      setCalendarData(newArray);
-    };
-
-    getCalendarData();
-  }, []);
+    dispatch(getClalendarData(role))
+  }, [dispatch, role]);
 
   return (
     <div className='calendarContainer'>
@@ -41,7 +28,7 @@ const Schedule = (props) => {
         }}
         dayMaxEvents={true}
         plugins={[dayGridPlugin,listPlugin]}
-        events={calendarData}
+        events={calendar !== null && calendar}
       />
     </div>
   );
