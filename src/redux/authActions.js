@@ -71,19 +71,11 @@ export const auth = () => {
   return async (dispatch) => {
     FB.auth().onAuthStateChanged((user) => {
       if (user) {
-        const createUserTime = new Date(user.metadata.creationTime).getTime();
-        const timeNow = new Date().getTime();
-        if (timeNow - createUserTime > 30000) {
-          dispatch({
-            type: LOGIN,
-            uid: user.uid,
-          });
-          dispatch(userActions.setUser(user.uid));
-        } else {
-          dispatch({
-            type: SET_INITIAL_STATE,
-          });
-        }
+        dispatch({
+          type: LOGIN,
+          uid: user.uid,
+        });
+        dispatch(userActions.setUser(user.uid));
       } else {
         dispatch({
           type: SET_INITIAL_STATE,

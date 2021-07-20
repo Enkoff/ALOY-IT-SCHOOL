@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import News from "./Pages/News/News-page";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { SnackbarProvider } from 'notistack';
+
 
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer";
@@ -13,27 +15,29 @@ import { auth } from "./redux/authActions";
 import AdminDrawer from "./admin/AdminDrawer";
 import AddPage from "./admin/add-page/AddPage";
 import UsersPage from "./admin/users-page/UsersPage";
-import AdminStartPage from './admin/AdminStartPage';
+import AdminStartPage from "./admin/AdminStartPage";
 
 function App() {
   const dispatch = useDispatch();
   const role = useSelector((store) => store.userReducer.role);
-  // const isAuth = useSelector(store => store.auth.isAuth)
+  const isAuth = useSelector((store) => store.auth.isAuth);
 
   useEffect(() => {
     dispatch(auth());
   }, [dispatch]);
 
-  if (role === "admin") {
+  if (role === "admin" && isAuth) {
     return (
-      <Router>
-        <AdminDrawer />
-        <Switch>
-          <Route exact path="/" component={AdminStartPage} />
-          <Route exact path="/admin-add-page" component={AddPage} />
-          <Route exact path="/admin-users-page" component={UsersPage} />
-        </Switch>
-      </Router>
+      <SnackbarProvider maxSnack={3}>
+        <Router>
+          <AdminDrawer />
+          <Switch>
+            <Route exact path="/" component={AdminStartPage} />
+            <Route exact path="/admin-add-page" component={AddPage} />
+            <Route exact path="/admin-users-page" component={UsersPage} />
+          </Switch>
+        </Router>
+      </SnackbarProvider>
     );
   }
 
