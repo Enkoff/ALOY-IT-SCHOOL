@@ -73,8 +73,8 @@ const AddLesson = (props) => {
   };
 
   useEffect(() => {
-    if (!loading && alert.subTitle !== undefined) {
-      snackBars(alert.subTitle, alert.variant);
+    if (!loading && alert.title !== undefined) {
+      snackBars(alert.title, alert.variant);
     }
   }, [alert]);
 
@@ -106,8 +106,7 @@ const AddLesson = (props) => {
         setLoading(false);
         setAlert({
           variant: "success",
-          title: "Успіх",
-          subTitle: "Заняття додано успішно",
+          title: "Заняття додано успішно",
           strong: "Статус OK",
           isAlert: true,
         });

@@ -9,9 +9,7 @@ export const addStudentValidation = (email, password, name, role) => {
     if (!validateEmail(email)) {
       return {
         variant: "warning",
-        title: "ІМЕЙЛ",
-        subTitle: "не валідний імейл",
-        strong: "Перевір",
+        title: "не валідний імейл",
         isAlert: true,
       };
     }
@@ -19,9 +17,7 @@ export const addStudentValidation = (email, password, name, role) => {
     if (password.length < 6) {
       return {
         variant: "warning",
-        title: "ПАРОЛЬ",
-        subTitle: "пароль має бути не менше 6-ти символів",
-        strong: "Перевір",
+        title: "пароль має бути не менше 6-ти символів",
         isAlert: true,
       };
     }
@@ -29,9 +25,7 @@ export const addStudentValidation = (email, password, name, role) => {
     if (name.length === 0) {
       return {
         variant: "warning",
-        title: "ІМЯ",
-        subTitle: "поле імя не може бути порожнім",
-        strong: "Перевір",
+        title: "поле імя не може бути порожнім",
         isAlert: true,
       };
     }
@@ -39,14 +33,12 @@ export const addStudentValidation = (email, password, name, role) => {
     if (role.length === 0) {
       return {
         variant: "warning",
-        title: "ГРУПА",
-        subTitle: "поле група не може бути порожнім",
-        strong: "Перевір",
+        title: "поле група не може бути порожнім",
         isAlert: true,
       };
     }
     return true;
   };
-  
+
   return checkInputs();
 };

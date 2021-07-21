@@ -25,7 +25,8 @@ import { logOut } from "../redux/authActions";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import StorageIcon from "@material-ui/icons/Storage";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import ChatIcon from '@material-ui/icons/Chat';
+import ChatIcon from "@material-ui/icons/Chat";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
 const drawerWidth = 240;
 
@@ -39,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    backgroundImage:
+      "url(https://bizcom.kz/wp-content/uploads/2014/12/Parallax-Background-Dark-081.jpg)",
+    backgroundPosition: "top",
+    backgroundSize: "cover",
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -47,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    backgroundImage:
+      "url(https://bizcom.kz/wp-content/uploads/2014/12/Parallax-Background-Dark-081.jpg)",
+    backgroundPosition: "top",
+    backgroundSize: "cover",
   },
   menuButton: {
     marginRight: 36,
@@ -65,6 +74,10 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    backgroundImage:
+      "url(https://bizcom.kz/wp-content/uploads/2014/12/Parallax-Background-Dark-081.jpg)",
+    backgroundPosition: "center",
+    backgroundSize: "cover",
   },
   drawerClose: {
     transition: theme.transitions.create("width", {
@@ -76,13 +89,15 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       width: theme.spacing(9) + 1,
     },
+    backgroundImage:
+      "url(https://bizcom.kz/wp-content/uploads/2014/12/Parallax-Background-Dark-081.jpg)",
+    backgroundPosition: "center",
   },
   toolbar: {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
   content: {
@@ -93,6 +108,21 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: theme.palette.text.primary,
     marginRight: "1.2rem",
+    color: "white",
+  },
+  icon: {
+    color: "white",
+  },
+  divider: {
+    backgroundColor: "white",
+  },
+  drawerItem: {
+    "&:hover": {
+      backgroundColor: "grey",
+    },
+  },
+  active: {
+    backgroundColor: "grey",
   },
 }));
 
@@ -135,7 +165,7 @@ export default function MiniDrawer() {
               [classes.hide]: open,
             })}
           >
-            <MenuIcon />
+            <ArrowForwardIosIcon fontSize="small" className={classes.icon} />
           </IconButton>
           <Typography variant="h6" noWrap>
             АДМІНІСТРАТИВНА ПАНЕЛЬ
@@ -158,65 +188,53 @@ export default function MiniDrawer() {
         <div className={classes.toolbar}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
+              <ChevronRightIcon className={classes.icon} />
             ) : (
-              <ChevronLeftIcon />
+              <ChevronLeftIcon className={classes.icon} />
             )}
           </IconButton>
         </div>
-        <Divider />
+        <Divider className={classes.divider} />
         <List>
-          <Link
-            onClick={handleDrawerClose}
-            to="/admin-add-page"
-            className={classes.link}
-          >
-            <ListItem button>
-              <ListItemIcon>
-                <StorageIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Керувння данними"} />
-            </ListItem>
-          </Link>
-          <Link
-            onClick={handleDrawerClose}
-            to="/admin-users-page"
-            className={classes.link}
-          >
-            <ListItem button>
-              <ListItemIcon>
-                <PeopleAltIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Студенти"} />
-            </ListItem>
-          </Link>
-          <Link
-            onClick={handleDrawerClose}
-            to="/admin-message"
-            className={classes.link}
-          >
-            <ListItem button>
-              <ListItemIcon>
-                <ChatIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Повідомлення"} />
-            </ListItem>
-          </Link>
-          <Link
-            onClick={handleDrawerClose}
-            to="/admin-doc"
-            className={classes.link}
-          >
-            <ListItem button>
-              <ListItemIcon>
-                <InsertDriveFileIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Документація"} />
-            </ListItem>
-          </Link>
+          {[
+            {
+              to: "/admin-add-page",
+              title: "Керувння данними",
+              icon: StorageIcon,
+            },
+            {
+              to: "/admin-users-page",
+              title: "Студенти",
+              icon: PeopleAltIcon,
+            },
+            {
+              to: "/admin-message",
+              title: "Повідомлення",
+              icon: ChatIcon,
+            },
+            {
+              to: "/admin-doc",
+              title: "Документація",
+              icon: InsertDriveFileIcon,
+            },
+          ].map((el) => {
+            return (
+              <Link
+                onClick={handleDrawerClose}
+                to={el.to}
+                className={classes.link}
+              >
+                <ListItem button className={classes.drawerItem}>
+                  <ListItemIcon>
+                    <el.icon className={classes.icon} />
+                  </ListItemIcon>
+                  <ListItemText primary={el.title} />
+                </ListItem>
+              </Link>
+            );
+          })}
         </List>
-
-        <Divider />
+        <Divider className={classes.divider} />
         <div
           style={{
             display: "flex",
@@ -226,8 +244,8 @@ export default function MiniDrawer() {
           }}
         >
           <Link to="/" className={classes.link}>
-            <IconButton onClick={logOutHandler}>
-              <ExitToAppIcon />
+            <IconButton onClick={logOutHandler} className={classes.drawerItem}>
+              <ExitToAppIcon className={classes.icon} />
             </IconButton>
           </Link>
         </div>

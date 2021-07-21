@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     marginLeft: theme.spacing(9),
     marginTop: theme.spacing(7),
-    padding: `1rem 1rem`,
+    padding: `1.5rem 1.5rem`,
   },
   paper: {
     display: "flex",
