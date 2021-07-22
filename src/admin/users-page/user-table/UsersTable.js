@@ -1,27 +1,47 @@
 import React from "react";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import { average } from "../../../module/avarage";
+import {
+  Table,
+  makeStyles,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@material-ui/core";
 
+import { average } from "../../../module/avarage";
 import Row from "./Row";
 
+const useStyles = makeStyles((theme) => ({
+  tableCell: {
+    padding: "5px",
+    backgroundColor: "rgba(29, 218, 202, 0.08)",
+  },
+}));
+
 export default function CollapsibleTable({ groupName, users }) {
+  const classes = useStyles();
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <TableCell />
-            <TableCell>Фото</TableCell>
-            <TableCell align="center">Імя</TableCell>
-            <TableCell align="center">Рейтинг</TableCell>
-            <TableCell align="center">Загальна кількість балів</TableCell>
-            <TableCell align="center">Видалити студента</TableCell>
+            <TableCell className={classes.tableCell} />
+            <TableCell className={classes.tableCell}>Фото</TableCell>
+            <TableCell className={classes.tableCell} align="center">
+              Ім'я
+            </TableCell>
+            <TableCell className={classes.tableCell} align="center">
+              Рейтинг / Бали
+            </TableCell>
+            <TableCell className={classes.tableCell} align="center">
+              Уроки / Пропуски
+            </TableCell>
+            <TableCell className={classes.tableCell} align="center">
+              Видалити студента
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

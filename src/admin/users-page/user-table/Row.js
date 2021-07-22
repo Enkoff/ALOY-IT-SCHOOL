@@ -20,29 +20,36 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 import { useDispatch } from "react-redux";
 import {
+  deleteRaitingItem,
   deleteUserAuth,
   deleteUserInFirestore,
 } from "../../../redux/adminActions";
 import { useSnackbar } from "notistack";
 import NativeSelects from "./RowAddForm";
 
-const useRowStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       borderBottom: "unset",
     },
   },
-});
+  omissions: {
+    backgroundColor: "rgba(255, 76, 107, 0.46)",
+  },
+  tableCell: {
+    padding: "0px",
+  },
+}));
 
 export default function Row({ users }) {
-  const classes = useRowStyles();
+  const classes = useStyles();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [alertOne, setAlertOne] = useState({});
   const [alertTwo, setAlertTwo] = useState({});
 
-  const dleteHandler = (email, password, uid, name) => {
+  const deleteUserHandler = (email, password, uid, name) => {
     try {
       dispatch(deleteUserAuth(email, password));
       setAlertOne({
@@ -73,6 +80,10 @@ export default function Row({ users }) {
       });
     }
   };
+  const deleteRatingHandler = (uid, reatingItemId, estimation, isLesson) => {
+    dispatch(deleteRaitingItem(uid, reatingItemId, estimation, isLesson));
+  };
+
   const snackBars = useCallback(
     (title, variant) => {
       enqueueSnackbar(`${title}`, { variant });
@@ -103,19 +114,29 @@ export default function Row({ users }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell className={classes.tableCell} component="th" scope="row">
           <Avatar src={users.avatar} />
         </TableCell>
-        <TableCell align="center">{users.name}</TableCell>
-        <TableCell align="center">
-          {users.reating !== undefined &&
-            `${average(users.reating).toFixed(1)}/5`}
+        <TableCell className={classes.tableCell} align="center">
+          {users.name}
         </TableCell>
-        <TableCell align="center">{users.totalNumberPoints}</TableCell>
-        <TableCell align="center">
+        <TableCell className={classes.tableCell} align="center">
+          {users.reating !== undefined &&
+            `${average(users.reating).toFixed(1)} / ${users.totalNumberPoints}`}
+        </TableCell>
+        <TableCell className={classes.tableCell} align="center">
+          <span style={{ color: "#0092ff" }}>{`${users.reating.length} `}</span>
+          /<span style={{ color: "red" }}>{` ${users.omissions.length}`}</span>
+        </TableCell>
+        <TableCell className={classes.tableCell} align="center">
           <IconButton
             onClick={() =>
-              dleteHandler(users.email, users.password, users.id, users.name)
+              deleteUserHandler(
+                users.email,
+                users.password,
+                users.id,
+                users.name
+              )
             }
           >
             <HighlightOffIcon color="secondary" />
@@ -123,7 +144,7 @@ export default function Row({ users }) {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell className={classes.tableCell} align="center" colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <Typography variant="h6" gutterBottom component="div">
@@ -133,28 +154,70 @@ export default function Row({ users }) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center">Дата</TableCell>
-                    <TableCell align="center">Предмет</TableCell>
-                    <TableCell align="center">Урок</TableCell>
-                    <TableCell align="center">Оцінка</TableCell>
-                    <TableCell align="center">Присутність на занятті</TableCell>
-                    <TableCell align="center">Імя викладача</TableCell>
+                    <TableCell className={classes.tableCell} align="center">
+                      Дата
+                    </TableCell>
+                    <TableCell className={classes.tableCell} align="center">
+                      Предмет
+                    </TableCell>
+                    <TableCell className={classes.tableCell} align="center">
+                      Урок
+                    </TableCell>
+                    <TableCell className={classes.tableCell} align="center">
+                      Оцінка
+                    </TableCell>
+                    <TableCell className={classes.tableCell} align="center">
+                      Додаткові бали + 2 за активність
+                    </TableCell>
+                    <TableCell className={classes.tableCell} align="center">
+                      Ім'я викладача
+                    </TableCell>
+                    <TableCell className={classes.tableCell} align="center">
+                      Видалити оцінку
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {users.reating !== undefined &&
                     users.reating.map((e, i) => (
-                      <TableRow key={i}>
-                        <TableCell align="center" component="th" scope="row">
+                      <TableRow
+                        className={
+                          e.estimation === "Пропуск" ? classes.omissions : ""
+                        }
+                        key={i}
+                      >
+                        <TableCell
+                          className={classes.tableCell}
+                          align="center"
+                          component="th"
+                          scope="row"
+                        >
                           {e.date}
                         </TableCell>
-                        <TableCell align="center">{e.subject}</TableCell>
-                        <TableCell align="center">{e.lesson}</TableCell>
-                        <TableCell align="center">{e.estimation}</TableCell>
-                        <TableCell align="center">
-                          <Checkbox checked={e.isLesson} disabled color='secondary' />
+                        <TableCell className={classes.tableCell} align="center">
+                          {e.subject}
                         </TableCell>
-                        <TableCell align="center">{e.author}</TableCell>
+                        <TableCell className={classes.tableCell} align="center">
+                          {e.lesson}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="center">
+                          {e.estimation}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="center">
+                          <Checkbox
+                            checked={e.isLesson}
+                            disabled
+                            color="secondary"
+                          />
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="center">
+                          {e.author}
+                        </TableCell>
+                        <TableCell className={classes.tableCell} align="center">
+                          <IconButton onClick={() => deleteRatingHandler(users.id, e.id, e.estimation, e.isLesson)}>
+                            <HighlightOffIcon color="secondary" />
+                          </IconButton>
+                        </TableCell>
                       </TableRow>
                     ))}
                 </TableBody>

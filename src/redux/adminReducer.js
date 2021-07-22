@@ -25,14 +25,32 @@ export const adminReducer = (state = initialState, action) => {
         if (el.id === action.uid) {
           el.reating = [...el.reating, action.newObj];
           el.totalNumberPoints =+ action.totalNumberPoints;
+          if (action.omissions) {
+            el.omissions = [...el.omissions, action.omissions];
+          }
         }
         return el;
       });
-
       return {
         ...state,
         users,
       };
+    case adminActions.DELETE_RANG_ITEM:
+      let usersCopy = JSON.parse(JSON.stringify(state.users));
+          usersCopy = usersCopy.map(el => {
+            if (el.id === action.uid) {
+              el.reating = action.newReating
+              el.omissions = action.newOmissions
+              el.totalNumberPoints = action.totalNumberPoints
+            }
+            return el;
+          })
+
+      return {
+        ...state,
+        users: usersCopy
+      };
+
     default:
       return state;
   }

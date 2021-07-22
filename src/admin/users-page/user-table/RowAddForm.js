@@ -1,10 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import NativeSelect from "@material-ui/core/NativeSelect";
+import {
+  InputLabel,
+  Tooltip,
+  FormControl,
+  NativeSelect,
+  Button,
+  Checkbox,
+} from "@material-ui/core";
+import HelpIcon from "@material-ui/icons/Help";
 import moment from "moment";
-import { Button, Checkbox } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { addRating } from "../../../redux/adminActions";
 import { useSnackbar } from "notistack";
@@ -12,10 +17,11 @@ import { reatingValidation } from "./reatingValidation";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    border: "1px solid black",
+    boxShadow: '0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset',
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: theme.spacing(3)
   },
   formControl: {
     margin: theme.spacing(1),
@@ -23,6 +29,13 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+  },
+  helpIcon: {
+    position: "absolute",
+    right: theme.spacing(2),
+    bottom: theme.spacing(-1),
+    color: "greey",
+    fontSize: theme.spacing(1.5),
   },
 }));
 
@@ -60,7 +73,8 @@ export default function NativeSelects({ users: { id, reating, name } }) {
       estimation,
       author,
       reating,
-      date
+      date,
+      isLesson
     );
     setAlert(validation);
 
@@ -69,12 +83,26 @@ export default function NativeSelects({ users: { id, reating, name } }) {
         dispatch(
           addRating(id, date, subject, lesson, estimation, author, isLesson)
         );
+        if (estimation === "Пропуск") {
+          setAlert({
+            variant: "info",
+            title: `Пропуск користувачу ${name} успішно створений!!!`,
+          });
+          return;
+        }
         setAlert({
           variant: "success",
           title: `Оцінка користувачу ${name} додана успішно!!!`,
         });
       } catch (error) {
         console.log(error);
+        if (estimation === "Пропуск") {
+          setAlert({
+            variant: "error",
+            title: `Пропуск користувачу ${name} не створений через помилку сервера!!!`,
+          });
+          return;
+        }
         setAlert({
           variant: "error",
           title: `Оцінка не додана користувачу ${name} через помилку сервера!!!`,
@@ -131,7 +159,8 @@ export default function NativeSelects({ users: { id, reating, name } }) {
           onChange={(e) => setEstimation(e.target.value)}
           inputProps={{ "aria-label": "estimation" }}
         >
-          <option value={0}>Оцінка</option>
+          <option value={""}>Оцінка</option>
+          <option value={"Пропуск"}>Пропуск</option>
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
@@ -152,7 +181,12 @@ export default function NativeSelects({ users: { id, reating, name } }) {
           <option value="Олег Єнько">Олег Єнько</option>
         </NativeSelect>
       </FormControl>
-      <Checkbox value={isLesson} onChange={lessonHandler} />
+      <div style={{ position: "relative" }}>
+        <Checkbox value={isLesson} onChange={lessonHandler} />
+        <Tooltip arrow title="Додатковий бал за активність" placement="right">
+          <HelpIcon className={classes.helpIcon} />
+        </Tooltip>
+      </div>
       <Button variant="contained" onClick={addBtnHandler}>
         Додати оцінку
       </Button>

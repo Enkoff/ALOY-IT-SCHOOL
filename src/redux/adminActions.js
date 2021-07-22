@@ -1,5 +1,6 @@
 import FB from "../Fierbase/FB";
 import { createOtherUser, deleteUser } from "../module/firebaseFunnction";
+import { v4 as uuidv4 } from "uuid";
 
 const BREAK_NAME = "Перерва";
 
@@ -8,6 +9,7 @@ export const ADD_USER = "ADD_USER";
 export const ADD_CALENDAR_DATA = "ADD_CALENDAR_DATA";
 export const DELETE_USER = "DELETE_USER";
 export const ADD_RATING = "ADD_RATING";
+export const DELETE_RANG_ITEM = "DELETE_RANG_ITEM";
 
 export const addUser = (email, password, name, role) => {
   return async (dispatch) => {
@@ -67,35 +69,104 @@ export const deleteUserInFirestore = (uid) => {
   };
 };
 
-export const addRating = (uid, date, subject, lesson, estimation, author, isLesson) => {
+export const addRating = (
+  uid,
+  date,
+  subject,
+  lesson,
+  estimation,
+  author,
+  isLesson
+) => {
   const estimationNumber = Number(estimation);
-
   return async (dispatch) => {
+    const docId = uuidv4();
     const newObj = {
+      id: docId,
       date,
       subject,
       lesson,
       isLesson,
-      estimation: estimationNumber,
+      estimation: isNaN(estimationNumber) ? "Пропуск" : estimationNumber,
+      author,
+    };
+    const newOmissionsObj = {
+      id: docId,
+      date,
+      subject,
+      lesson,
       author,
     };
 
-    let totalNumberPoints =
-      (await FB.firestore().collection("users").doc(uid).get()).data()
-        .totalNumberPoints + estimationNumber;
+    let totalNumberPoints = (
+      await FB.firestore().collection("users").doc(uid).get()
+    ).data().totalNumberPoints;
+
+    const omissionsDate = (
+      await FB.firestore().collection("users").doc(uid).get()
+    ).data().omissions;
+
+    if (!isNaN(estimationNumber)) {
+      totalNumberPoints += estimationNumber;
+    }
 
     FB.firestore()
       .collection("users")
       .doc(`${uid}`)
       .update({
         reating: FB.firestore.FieldValue.arrayUnion(newObj),
-        totalNumberPoints: isLesson ? totalNumberPoints + 1 : totalNumberPoints
+        omissions: isNaN(estimationNumber)
+          ? FB.firestore.FieldValue.arrayUnion(newOmissionsObj)
+          : omissionsDate,
+        totalNumberPoints: isLesson ? totalNumberPoints + 2 : totalNumberPoints,
       });
     dispatch({
       type: ADD_RATING,
       uid,
       newObj,
-      totalNumberPoints: isLesson ? totalNumberPoints + 1 : totalNumberPoints
+      totalNumberPoints: isLesson ? totalNumberPoints + 2 : totalNumberPoints,
+      omissions: isNaN(estimationNumber) && newOmissionsObj,
+    });
+  };
+};
+
+export const deleteRaitingItem = (uid, reatingItemId, estimation, isLesson) => {
+  return async (dispatch) => {
+    const reating = (
+      await FB.firestore().collection("users").doc(uid).get()
+    ).data().reating;
+    const newReating = reating.filter((el) => el.id !== reatingItemId);
+
+    const omissions = (
+      await FB.firestore().collection("users").doc(uid).get()
+    ).data().omissions;
+    const newOmissions = omissions.filter((el) => el.id !== reatingItemId);
+
+    let totalNumberPoints = (
+      await FB.firestore().collection("users").doc(uid).get()
+    ).data().totalNumberPoints;
+
+    if (estimation !== "Пропуск") {
+      if (isLesson) {
+        console.log('POPAL');
+        totalNumberPoints = (totalNumberPoints - estimation) - 2
+      } else {
+        totalNumberPoints -= estimation;
+      }
+    }
+
+    await FB.firestore().collection("users").doc(`${uid}`).update({
+      reating: newReating,
+      omissions: newOmissions,
+      totalNumberPoints: totalNumberPoints,
+    });
+
+    dispatch({
+      type: DELETE_RANG_ITEM,
+      uid,
+      newReating,
+      newOmissions,
+      totalNumberPoints,
     });
   };
 };

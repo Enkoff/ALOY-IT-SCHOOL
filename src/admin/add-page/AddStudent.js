@@ -101,7 +101,7 @@ const AddStudent = (props) => {
         <TextField
           size="small"
           id="email"
-          label="Імейл*"
+          label="Пошта*"
           variant="outlined"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -117,7 +117,7 @@ const AddStudent = (props) => {
         <TextField
           size="small"
           id="name"
-          label="Імя*"
+          label="Ім'я*"
           variant="outlined"
           value={name}
           onChange={(e) => setName(e.target.value)}

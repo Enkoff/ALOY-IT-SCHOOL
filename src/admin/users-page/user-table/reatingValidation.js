@@ -4,7 +4,8 @@ export const reatingValidation = (
   estimation,
   author,
   reating,
-  date
+  date,
+  isLesson
 ) => {
   const chekReating = () => {
     let res = true;
@@ -17,10 +18,10 @@ export const reatingValidation = (
   };
 
   const checkInputs = () => {
-    if (reating.length === 3) {
+    if (estimation === 'Пропуск' && isLesson) {
       return {
-        variant: "info",
-        title: `На сьогодні ви додали вже всі оцінки студенту!!!`,
+        variant: "warning",
+        title: `Якщо в полі оцінка стоїть пропуск то чек бокс повинен бути порожній!!!`,
         isAlert: true,
       };
     }
