@@ -77,7 +77,6 @@ const AddStudent = (props) => {
         setAlert({
           variant: "success",
           title: "Корістувач успішно зареєстрований!",
-          isAlert: true,
         });
         clearInputs();
       } catch (error) {
@@ -87,9 +86,15 @@ const AddStudent = (props) => {
           setAlert({
             variant: "error",
             title: "Імейл вже зареєстрована!",
-            isAlert: true,
           });
         }
+        if (String(error.code) === "app/duplicate-app") {
+          setAlert({
+            variant: "error",
+            title: "Виникла помилка зєднання з сервером прерзавантажте сторінку!",
+          });
+        }
+        
       }
     }
   };

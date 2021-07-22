@@ -86,26 +86,26 @@ export default function NativeSelects({ users: { id, reating, name } }) {
         if (estimation === "Пропуск") {
           setAlert({
             variant: "info",
-            title: `Пропуск користувачу ${name} успішно створений!!!`,
+            title: `Пропуск користувачу ${name} успішно створений!`,
           });
           return;
         }
         setAlert({
           variant: "success",
-          title: `Оцінка користувачу ${name} додана успішно!!!`,
+          title: `Оцінка користувачу ${name} додана успішно!`,
         });
       } catch (error) {
         console.log(error);
         if (estimation === "Пропуск") {
           setAlert({
             variant: "error",
-            title: `Пропуск користувачу ${name} не створений через помилку сервера!!!`,
+            title: `Пропуск користувачу ${name} не створений через помилку сервера!`,
           });
           return;
         }
         setAlert({
           variant: "error",
-          title: `Оцінка не додана користувачу ${name} через помилку сервера!!!`,
+          title: `Оцінка не додана користувачу ${name} через помилку сервера!`,
         });
       }
     }

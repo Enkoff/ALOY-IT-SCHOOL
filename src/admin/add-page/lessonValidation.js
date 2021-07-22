@@ -14,7 +14,6 @@ export const lessonValidation = (groupName, date) => {
       return {
         variant: "warning",
         title: "поле група не може бути порожнім",
-        isAlert: true,
       };
     }
 
@@ -22,7 +21,6 @@ export const lessonValidation = (groupName, date) => {
       return {
         variant: "warning",
         title: "поле дата не може бути порожнім",
-        isAlert: true,
       };
     }
 
@@ -30,7 +28,6 @@ export const lessonValidation = (groupName, date) => {
       return {
         variant: "warning",
         title: "формат даты повинен бути 2021-07-21",
-        isAlert: true,
       };
     }
     return true;

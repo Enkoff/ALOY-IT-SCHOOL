@@ -55,14 +55,12 @@ export default function Row({ users }) {
       setAlertOne({
         variant: "success",
         title: `Користувач ${name} успішно видалений з Firebase Auth!`,
-        isAlert: true,
       });
     } catch (error) {
       console.log(error);
       setAlertOne({
         variant: "error",
         title: `Користувач ${name} не видалений з Firebase Auth!`,
-        isAlert: true,
       });
     }
     try {
@@ -70,18 +68,42 @@ export default function Row({ users }) {
       setAlertTwo({
         variant: "success",
         title: `Користувач ${name} успішно видалений з Firestore!`,
-        isAlert: true,
       });
     } catch (error) {
       setAlertTwo({
         variant: "error",
         title: `Користувач ${name} не видалений з Firestore!`,
-        isAlert: true,
       });
     }
   };
   const deleteRatingHandler = (uid, reatingItemId, estimation, isLesson) => {
-    dispatch(deleteRaitingItem(uid, reatingItemId, estimation, isLesson));
+    try {
+      dispatch(deleteRaitingItem(uid, reatingItemId, estimation, isLesson));
+      if (estimation === "Пропуск") {
+        setAlertOne({
+          variant: "info",
+          title: `Проопуск студента ${users.name} успішно видалено!`,
+        });
+      } else {
+        setAlertOne({
+          variant: "success",
+          title: `Оцінкy студента ${users.name} успішно видалено!`,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      if (estimation === "Пропуск") {
+        setAlertOne({
+          variant: "error",
+          title: `Пропуск студента ${users.name} не видалено через помилку сервера!`,
+        });
+      } else {
+        setAlertOne({
+          variant: "error",
+          title: `Оцінку студента ${users.name} не видалена через помилку сервера!`,
+        });
+      }
+    }
   };
 
   const snackBars = useCallback(
@@ -214,7 +236,16 @@ export default function Row({ users }) {
                           {e.author}
                         </TableCell>
                         <TableCell className={classes.tableCell} align="center">
-                          <IconButton onClick={() => deleteRatingHandler(users.id, e.id, e.estimation, e.isLesson)}>
+                          <IconButton
+                            onClick={() =>
+                              deleteRatingHandler(
+                                users.id,
+                                e.id,
+                                e.estimation,
+                                e.isLesson
+                              )
+                            }
+                          >
                             <HighlightOffIcon color="secondary" />
                           </IconButton>
                         </TableCell>

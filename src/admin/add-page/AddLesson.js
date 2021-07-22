@@ -107,8 +107,6 @@ const AddLesson = (props) => {
         setAlert({
           variant: "success",
           title: "Заняття додано успішно",
-          strong: "Статус OK",
-          isAlert: true,
         });
         clearInputs();
       } catch (error) {

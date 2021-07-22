@@ -15,7 +15,6 @@ export const addStudentValidation = (email, password, name, role) => {
       return {
         variant: "warning",
         title: "не коректна Пошта",
-        isAlert: true,
       };
     }
 
@@ -23,7 +22,6 @@ export const addStudentValidation = (email, password, name, role) => {
       return {
         variant: "warning",
         title: "Пароль має бути не менше 6-ти символів",
-        isAlert: true,
       };
     }
 
@@ -31,7 +29,6 @@ export const addStudentValidation = (email, password, name, role) => {
       return {
         variant: "warning",
         title: "поле Ім'я не може бути порожнім",
-        isAlert: true,
       };
     }
 
@@ -39,14 +36,12 @@ export const addStudentValidation = (email, password, name, role) => {
       return {
         variant: "warning",
         title: "поле Група не може бути порожнім",
-        isAlert: true,
       };
     }
     if (!validGroupName(role)) {
       return {
         variant: "warning",
         title: "Ім'я групи повинно бути на англійській мові приклад: a1",
-        isAlert: true,
       };
     }
     return true;
