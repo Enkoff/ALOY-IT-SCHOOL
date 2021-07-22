@@ -15,7 +15,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
@@ -106,9 +105,8 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: "none",
-    color: theme.palette.text.primary,
+    color: 'white',
     marginRight: "1.2rem",
-    color: "white",
   },
   icon: {
     color: "white",
@@ -220,6 +218,7 @@ export default function MiniDrawer() {
           ].map((el) => {
             return (
               <Link
+                key={el.title}
                 onClick={handleDrawerClose}
                 to={el.to}
                 className={classes.link}

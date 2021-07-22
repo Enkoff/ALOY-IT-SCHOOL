@@ -45,25 +45,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CustomizedSelects() {
+export default function CustomizedSelects({ setGroupName }) {
   const classes = useStyles();
-  const [age, setAge] = useState("");
+  const [grName, setGrName] = useState("a1");
   const groups = useSelector((state) => state.admin.groups);
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setGrName(event.target.value);
+    setGroupName(event.target.value);
   };
 
   return (
     <FormControl className={classes.margin}>
       <NativeSelect
         id="demo-customized-select-native"
-        value={age}
+        value={grName}
         onChange={handleChange}
         input={<BootstrapInput />}
       >
-        <option></option>
-        {groups !== null && groups.map((group) => <option key={group}>{group}</option>)}
+        {groups !== null &&
+          groups.map((group) => <option key={group}>{group}</option>)}
       </NativeSelect>
     </FormControl>
   );

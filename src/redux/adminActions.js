@@ -1,28 +1,36 @@
 import FB from "../Fierbase/FB";
-import { createOtherUser } from "../module/createUser";
+import { createOtherUser, deleteUser } from "../module/firebaseFunnction";
 
 const BREAK_NAME = "Перерва";
 
 export const SET_USERS = "SET_USERS";
 export const ADD_USER = "ADD_USER";
 export const ADD_CALENDAR_DATA = "ADD_CALENDAR_DATA";
+export const DELETE_USER = "DELETE_USER";
+export const ADD_RATING = "ADD_RATING";
 
 export const addUser = (email, password, name, role) => {
   return async (dispatch) => {
     //Додаю нового користувача створюючи новий канал з FIREBASE
     const uid = await createOtherUser(email, password);
-    // 
+    //
     const newUser = {
       id: uid,
       email,
+      password,
       name,
       role: role.toLowerCase(),
-      avatar: null,
+      avatar:
+        "https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png",
       reating: [],
+      homeWork: [],
+      totalNumberPoints: 1,
+      omissions: [],
     };
     await FB.firestore().collection("users").doc(uid).set(newUser);
   };
 };
+
 export const setUsers = () => {
   return async (dispatch) => {
     const userArray = [];
@@ -31,13 +39,63 @@ export const setUsers = () => {
 
     response.docs.forEach((el) => {
       userArray.push(el.data());
-      groups.push(el.data().role);
+      if (el.data().role !== "admin") {
+        groups.push(el.data().role);
+      }
     });
-
     dispatch({
       type: SET_USERS,
       users: userArray,
       groups: (groups = [...new Set(groups)]),
+    });
+  };
+};
+
+export const deleteUserAuth = (email, password) => {
+  return async () => {
+    await deleteUser(email, password);
+  };
+};
+
+export const deleteUserInFirestore = (uid) => {
+  return async (dispatch) => {
+    await FB.firestore().collection("users").doc(`${uid}`).delete();
+    dispatch({
+      type: DELETE_USER,
+      uid,
+    });
+  };
+};
+
+export const addRating = (uid, date, subject, lesson, estimation, author, isLesson) => {
+  const estimationNumber = Number(estimation);
+
+  return async (dispatch) => {
+    const newObj = {
+      date,
+      subject,
+      lesson,
+      isLesson,
+      estimation: estimationNumber,
+      author,
+    };
+
+    let totalNumberPoints =
+      (await FB.firestore().collection("users").doc(uid).get()).data()
+        .totalNumberPoints + estimationNumber;
+
+    FB.firestore()
+      .collection("users")
+      .doc(`${uid}`)
+      .update({
+        reating: FB.firestore.FieldValue.arrayUnion(newObj),
+        totalNumberPoints: isLesson ? totalNumberPoints + 1 : totalNumberPoints
+      });
+    dispatch({
+      type: ADD_RATING,
+      uid,
+      newObj,
+      totalNumberPoints: isLesson ? totalNumberPoints + 1 : totalNumberPoints
     });
   };
 };

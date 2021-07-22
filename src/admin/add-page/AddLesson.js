@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { makeStyles, Typography, TextField, Tooltip } from "@material-ui/core";
 import * as adminActions from "../../redux/adminActions";
@@ -68,15 +68,15 @@ const AddLesson = (props) => {
     setLessonThreeName("");
   };
 
-  const snackBars = (title, variant) => {
+  const snackBars = useCallback((title, variant) => {
     enqueueSnackbar(`${title}`, { variant });
-  };
+  },[enqueueSnackbar]);
 
   useEffect(() => {
     if (!loading && alert.title !== undefined) {
       snackBars(alert.title, alert.variant);
     }
-  }, [alert]);
+  }, [alert, snackBars, loading]);
 
   const addLessonHandler = async () => {
     setAlert(lessonValidation(groupName, date));

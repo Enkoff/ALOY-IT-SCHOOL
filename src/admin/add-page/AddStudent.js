@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Typography, TextField, makeStyles } from "@material-ui/core";
 import * as adminActions from "../../redux/adminActions";
-// import AdminAlert from "../components/AdminAlert";
 import ButtonLoading from "../../components/ButtonLoading";
 import { addStudentValidation } from "./studentValidation";
 import { useSnackbar } from "notistack";
@@ -57,15 +56,15 @@ const AddStudent = (props) => {
     setRole("");
   };
 
-  const snackBars = (title, variant) => {
+  const snackBars = useCallback((title, variant) => {
     enqueueSnackbar(`${title}`, { variant });
-  };
+  },[enqueueSnackbar]);
 
   useEffect(() => {
-    if (!loading && alert.subTitle !== undefined) {
-      snackBars(alert.subTitle, alert.variant);
+    if (!loading && alert.title !== undefined) {
+      snackBars(alert.title, alert.variant);
     }
-  }, [alert]);
+  }, [alert, snackBars, loading]);
 
   const addUserHandler = async () => {
     setAlert(addStudentValidation(email, password, name, role));
@@ -77,7 +76,7 @@ const AddStudent = (props) => {
         setLoading(false);
         setAlert({
           variant: "success",
-          subTitle: "Корістувач успішно зареєстрований!",
+          title: "Корістувач успішно зареєстрований!",
           isAlert: true,
         });
         clearInputs();
@@ -87,7 +86,7 @@ const AddStudent = (props) => {
         if (String(error.code) === "auth/email-already-in-use") {
           setAlert({
             variant: "error",
-            subTitle: "Імейл вже зареєстрована!",
+            title: "Імейл вже зареєстрована!",
             isAlert: true,
           });
         }
