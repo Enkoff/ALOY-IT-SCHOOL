@@ -10,7 +10,6 @@ import {
   Paper,
 } from "@material-ui/core";
 
-import { average } from "../../../module/avarage";
 import Row from "./Row";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +27,7 @@ export default function CollapsibleTable({ groupName, users }) {
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <TableCell className={classes.tableCell} />
+            <TableCell className={classes.tableCell}>Les/Hom </TableCell>
             <TableCell className={classes.tableCell}>Фото</TableCell>
             <TableCell className={classes.tableCell} align="center">
               Ім'я
@@ -40,6 +39,9 @@ export default function CollapsibleTable({ groupName, users }) {
               Уроки / Пропуски
             </TableCell>
             <TableCell className={classes.tableCell} align="center">
+              Домашні завдання
+            </TableCell>
+            <TableCell className={classes.tableCell} align="center">
               Видалити студента
             </TableCell>
           </TableRow>
@@ -48,7 +50,6 @@ export default function CollapsibleTable({ groupName, users }) {
           {users !== null &&
             users
               .filter((u) => u.role === groupName)
-              .sort((a, b) => average(b.reating) - average(a.reating))
               .map((u) => <Row key={u.id} users={u} />)}
         </TableBody>
       </Table>

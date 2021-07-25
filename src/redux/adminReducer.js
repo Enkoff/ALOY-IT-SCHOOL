@@ -9,7 +9,9 @@ export const adminReducer = (state = initialState, action) => {
   switch (action.type) {
     case adminActions.SET_USERS:
       return {
-        users: action.users,
+        users: action.users.sort(
+          (a, b) => b.totalNumberPoints - a.totalNumberPoints
+        ),
         groups: action.groups,
         totalNumberPoints: action.users.totalNumberPoints,
       };
@@ -24,10 +26,7 @@ export const adminReducer = (state = initialState, action) => {
       users = users.map((el) => {
         if (el.id === action.uid) {
           el.reating = [...el.reating, action.newObj];
-          el.totalNumberPoints =+ action.totalNumberPoints;
-          if (action.omissions) {
-            el.omissions = [...el.omissions, action.omissions];
-          }
+          el.totalNumberPoints = +action.totalNumberPoints;
         }
         return el;
       });
@@ -37,20 +36,43 @@ export const adminReducer = (state = initialState, action) => {
       };
     case adminActions.DELETE_RANG_ITEM:
       let usersCopy = JSON.parse(JSON.stringify(state.users));
-          usersCopy = usersCopy.map(el => {
-            if (el.id === action.uid) {
-              el.reating = action.newReating
-              el.omissions = action.newOmissions
-              el.totalNumberPoints = action.totalNumberPoints
-            }
-            return el;
-          })
+      usersCopy = usersCopy.map((el) => {
+        if (el.id === action.uid) {
+          el.reating = action.newReating;
+          el.totalNumberPoints = action.totalNumberPoints;
+        }
+        return el;
+      });
 
       return {
         ...state,
-        users: usersCopy
+        users: usersCopy,
       };
+    case adminActions.ADD_HOME_WORK_ITEM:
+      let usersCopy2 = JSON.parse(JSON.stringify(state.users));
 
+      usersCopy2 = usersCopy2.map((el) => {
+        if (el.id === action.uid) {
+          el.homeWork = [...el.homeWork, action.homeWorkObj];
+        }
+        return el;
+      });
+      return {
+        ...state,
+        users: usersCopy2,
+      };
+    case adminActions.DELET_HOME_WORK_ITEM:
+      let usersCopy3 = JSON.parse(JSON.stringify(state.users));
+      usersCopy3 = usersCopy3.map((el) => {
+        if (el.id === action.uid) {
+          el.homeWork = action.newHomeWork;
+        }
+        return el;
+      });
+      return {
+        ...state,
+        users: usersCopy3,
+      };
     default:
       return state;
   }

@@ -10,6 +10,8 @@ export const ADD_CALENDAR_DATA = "ADD_CALENDAR_DATA";
 export const DELETE_USER = "DELETE_USER";
 export const ADD_RATING = "ADD_RATING";
 export const DELETE_RANG_ITEM = "DELETE_RANG_ITEM";
+export const ADD_HOME_WORK_ITEM = "ADD_HOME_WORK_ITEM";
+export const DELET_HOME_WORK_ITEM = "DELET_HOME_WORK_ITEM";
 
 export const addUser = (email, password, name, role) => {
   return async (dispatch) => {
@@ -27,7 +29,6 @@ export const addUser = (email, password, name, role) => {
       reating: [],
       homeWork: [],
       totalNumberPoints: 1,
-      omissions: [],
     };
     await FB.firestore().collection("users").doc(uid).set(newUser);
   };
@@ -81,6 +82,7 @@ export const addRating = (
   const estimationNumber = Number(estimation);
   return async (dispatch) => {
     const docId = uuidv4();
+
     const newObj = {
       id: docId,
       date,
@@ -90,21 +92,10 @@ export const addRating = (
       estimation: isNaN(estimationNumber) ? "Пропуск" : estimationNumber,
       author,
     };
-    const newOmissionsObj = {
-      id: docId,
-      date,
-      subject,
-      lesson,
-      author,
-    };
 
     let totalNumberPoints = (
       await FB.firestore().collection("users").doc(uid).get()
     ).data().totalNumberPoints;
-
-    const omissionsDate = (
-      await FB.firestore().collection("users").doc(uid).get()
-    ).data().omissions;
 
     if (!isNaN(estimationNumber)) {
       totalNumberPoints += estimationNumber;
@@ -115,9 +106,6 @@ export const addRating = (
       .doc(`${uid}`)
       .update({
         reating: FB.firestore.FieldValue.arrayUnion(newObj),
-        omissions: isNaN(estimationNumber)
-          ? FB.firestore.FieldValue.arrayUnion(newOmissionsObj)
-          : omissionsDate,
         totalNumberPoints: isLesson ? totalNumberPoints + 2 : totalNumberPoints,
       });
     dispatch({
@@ -125,7 +113,6 @@ export const addRating = (
       uid,
       newObj,
       totalNumberPoints: isLesson ? totalNumberPoints + 2 : totalNumberPoints,
-      omissions: isNaN(estimationNumber) && newOmissionsObj,
     });
   };
 };
@@ -137,27 +124,19 @@ export const deleteRaitingItem = (uid, reatingItemId, estimation, isLesson) => {
     ).data().reating;
     const newReating = reating.filter((el) => el.id !== reatingItemId);
 
-    const omissions = (
-      await FB.firestore().collection("users").doc(uid).get()
-    ).data().omissions;
-    const newOmissions = omissions.filter((el) => el.id !== reatingItemId);
-
     let totalNumberPoints = (
       await FB.firestore().collection("users").doc(uid).get()
     ).data().totalNumberPoints;
 
     if (estimation !== "Пропуск") {
       if (isLesson) {
-        console.log('POPAL');
-        totalNumberPoints = (totalNumberPoints - estimation) - 2
+        totalNumberPoints = totalNumberPoints - estimation - 2;
       } else {
         totalNumberPoints -= estimation;
       }
     }
-
     await FB.firestore().collection("users").doc(`${uid}`).update({
       reating: newReating,
-      omissions: newOmissions,
       totalNumberPoints: totalNumberPoints,
     });
 
@@ -165,8 +144,60 @@ export const deleteRaitingItem = (uid, reatingItemId, estimation, isLesson) => {
       type: DELETE_RANG_ITEM,
       uid,
       newReating,
-      newOmissions,
       totalNumberPoints,
+    });
+  };
+};
+
+export const addHomeWorkItem = (
+  uid,
+  date,
+  subject,
+  nameHomeWork,
+  estimation,
+  author
+) => {
+  return async (dispatch) => {
+    const estimationNumber = Number(estimation);
+
+    const homeWorkObj = {
+      id: uuidv4(),
+      date,
+      subject,
+      nameHomeWork,
+      estimation: isNaN(estimationNumber) ? "Не виконано" : estimationNumber,
+      author,
+    };
+
+    FB.firestore()
+      .collection("users")
+      .doc(`${uid}`)
+      .update({
+        homeWork: FB.firestore.FieldValue.arrayUnion(homeWorkObj),
+      });
+    dispatch({
+      type: ADD_HOME_WORK_ITEM,
+      uid,
+      homeWorkObj,
+    });
+  };
+};
+
+export const deleteHomeWorkItem = (uid, homeWorkItemId) => {
+  return async (dispatch) => {
+    const homeWork = (
+      await FB.firestore().collection("users").doc(uid).get()
+    ).data().homeWork;
+
+    const newHomeWork = homeWork.filter((el) => el.id !== homeWorkItemId);
+
+    await FB.firestore().collection("users").doc(`${uid}`).update({
+      homeWork: newHomeWork,
+    });
+    dispatch({
+      type: DELET_HOME_WORK_ITEM,
+      uid,
+      newHomeWork,
     });
   };
 };

@@ -4,7 +4,6 @@ import CustomizedSelects from "./SelectedGroupe";
 import { useDispatch, useSelector } from "react-redux";
 import { setUsers } from "../../redux/adminActions";
 import UsersTable from "./user-table/UsersTable";
-import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     flexDirection: "column",
     alignItems: "center",
-    height: "80vh",
     color: theme.palette.text.secondary,
   },
   form: {
@@ -48,7 +46,6 @@ const UsersPage = (props) => {
   const dispatch = useDispatch();
   const [groupName, setGroupName] = useState("a1");
   const users = useSelector((state) => state.admin.users);
-  const dateNow = moment().format().split("T")[0];
 
   useEffect(() => {
     dispatch(setUsers());
@@ -68,10 +65,9 @@ const UsersPage = (props) => {
               <Typography align="center">Виберіть групу студентів</Typography>
               <CustomizedSelects setGroupName={groupNameHandler} />
             </div>
-            <Typography
-              variant="overline"
-              className={classes.date}
-            >{`Дата: ${dateNow}`}</Typography>
+            <Typography variant="overline" className={classes.date}>
+              Оцінювання студентів
+            </Typography>
             <UsersTable groupName={groupName} users={users} />
           </Paper>
         </Grid>

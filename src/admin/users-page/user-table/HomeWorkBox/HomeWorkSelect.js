@@ -1,27 +1,24 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  InputLabel,
-  Tooltip,
   FormControl,
   NativeSelect,
   Button,
-  Checkbox,
+  TextField,
 } from "@material-ui/core";
-import HelpIcon from "@material-ui/icons/Help";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { addRating } from "../../../redux/adminActions";
 import { useSnackbar } from "notistack";
-import { reatingValidation } from "./reatingValidation";
+import { homeWorkValidation } from "./homeWorkValidation";
+import { addHomeWorkItem } from "../../../../redux/adminActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    boxShadow: '0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset',
+    boxShadow: "0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(3),
   },
   formControl: {
     margin: theme.spacing(1),
@@ -37,21 +34,37 @@ const useStyles = makeStyles((theme) => ({
     color: "greey",
     fontSize: theme.spacing(1.5),
   },
+  btnDateNow: {
+    backgroundColor: "#7FDBFF",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#7FDBFF",
+    },
+    fontSize: ".64rem",
+  },
+  btnAdd: {
+    backgroundColor: "#2ECC40",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#2ECC40",
+    },
+    fontSize: ".64rem",
+  },
 }));
 
-export default function NativeSelects({ users: { id, reating, name } }) {
+export default function NativeSelects({ users: { id, homeWork, name } }) {
   const dateNow = moment().format().split("T")[0];
   const date = dateNow;
   const classes = useStyles();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
+  const [homeWorkDate, setHomeWorkDate] = useState("");
   const [alert, setAlert] = useState({});
   const [subject, setSubject] = useState("");
-  const [lesson, setLesson] = useState("");
+  const [nameHomeWork, setNameHomeWork] = useState("");
   const [estimation, setEstimation] = useState("");
   const [author, setAuthor] = useState("");
-  const [isLesson, setIsLesson] = useState(false);
 
   const snackBars = useCallback(
     (title, variant) => {
@@ -67,23 +80,28 @@ export default function NativeSelects({ users: { id, reating, name } }) {
   }, [alert, snackBars]);
 
   const addBtnHandler = () => {
-    const validation = reatingValidation(
+    const validation = homeWorkValidation(
+      homeWorkDate,
       subject,
-      lesson,
+      nameHomeWork,
       estimation,
       author,
-      reating,
-      date,
-      isLesson
+      homeWork
     );
     setAlert(validation);
-
     if (validation === true) {
       try {
         dispatch(
-          addRating(id, date, subject, lesson, estimation, author, isLesson)
+          addHomeWorkItem(
+            id,
+            homeWorkDate,
+            subject,
+            nameHomeWork,
+            estimation,
+            author
+          )
         );
-        if (estimation === "Пропуск") {
+        if (estimation === "Not performed") {
           setAlert({
             variant: "info",
             title: `Пропуск користувачу ${name} успішно створений!`,
@@ -96,7 +114,7 @@ export default function NativeSelects({ users: { id, reating, name } }) {
         });
       } catch (error) {
         console.log(error);
-        if (estimation === "Пропуск") {
+        if (estimation === "Not performed") {
           setAlert({
             variant: "error",
             title: `Пропуск користувачу ${name} не створений через помилку сервера!`,
@@ -111,17 +129,25 @@ export default function NativeSelects({ users: { id, reating, name } }) {
     }
   };
 
-  const lessonHandler = () => {
-    setIsLesson((prev) => !prev);
-  };
-
   return (
     <div className={classes.root}>
-      <FormControl className={classes.formControl} disabled>
-        <InputLabel htmlFor="name-native-disabled"></InputLabel>
-        <NativeSelect value={date}>
-          <option value={dateNow}>{dateNow}</option>
-        </NativeSelect>
+      <FormControl className={classes.formControl}>
+        <Button
+          size="small"
+          className={classes.btnDateNow}
+          variant="contained"
+          onClick={() => setHomeWorkDate(date)}
+        >
+           Date Now
+        </Button>
+      </FormControl>
+      <FormControl className={classes.formControl}>
+        <TextField
+          id="standard-basic"
+          label={`Дата`}
+          value={homeWorkDate}
+          onChange={(e) => setHomeWorkDate(e.target.value)}
+        />
       </FormControl>
       <FormControl className={classes.formControl}>
         <NativeSelect
@@ -140,15 +166,15 @@ export default function NativeSelects({ users: { id, reating, name } }) {
       <FormControl className={classes.formControl}>
         <NativeSelect
           className={classes.selectEmpty}
-          value={lesson}
+          value={nameHomeWork}
           name="lesson"
-          onChange={(e) => setLesson(e.target.value)}
+          onChange={(e) => setNameHomeWork(e.target.value)}
           inputProps={{ "aria-label": "lesson" }}
         >
-          <option value="">Урок</option>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
+          <option value="">Назва дз</option>
+          <option value={"Створити функцію"}>Створити функцію</option>
+          <option value={"Перебрати масив"}>Перебрати масив</option>
+          <option value={"Слухачі подій"}>Слухачі подій</option>
         </NativeSelect>
       </FormControl>
       <FormControl className={classes.formControl}>
@@ -160,7 +186,7 @@ export default function NativeSelects({ users: { id, reating, name } }) {
           inputProps={{ "aria-label": "estimation" }}
         >
           <option value={""}>Оцінка</option>
-          <option value={"Пропуск"}>Пропуск</option>
+          <option value={"Not performed"}>Не виконано</option>
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
@@ -181,15 +207,15 @@ export default function NativeSelects({ users: { id, reating, name } }) {
           <option value="Олег Єнько">Олег Єнько</option>
         </NativeSelect>
       </FormControl>
-      <div style={{ position: "relative" }}>
-        <Checkbox value={isLesson} onChange={lessonHandler} />
-        <Tooltip arrow title="Додатковий бал за активність" placement="right">
-          <HelpIcon className={classes.helpIcon} />
-        </Tooltip>
-      </div>
-      <Button variant="contained" onClick={addBtnHandler}>
-        Додати оцінку
-      </Button>
+      <FormControl className={classes.formControl}>
+        <Button
+          variant="contained"
+          className={classes.btnAdd}
+          onClick={addBtnHandler}
+        >
+          Додати оцінку
+        </Button>
+      </FormControl>
     </div>
   );
 }
