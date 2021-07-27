@@ -101,7 +101,7 @@ const AddStudent = (props) => {
 
   return (
     <>
-      <Typography align="center">Додати студент</Typography>
+      <Typography align="center">Додати студента</Typography>
       <form className={classes.form} noValidate autoComplete="off">
         <TextField
           size="small"

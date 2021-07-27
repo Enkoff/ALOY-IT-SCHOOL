@@ -3,6 +3,8 @@ import * as adminActions from "./adminActions";
 const initialState = {
   users: null,
   groups: null,
+  teachers: null,
+  discipline: null,
 };
 
 export const adminReducer = (state = initialState, action) => {
@@ -73,6 +75,33 @@ export const adminReducer = (state = initialState, action) => {
         ...state,
         users: usersCopy3,
       };
+    case adminActions.SET_TEACHERS_AND_DISCIPLINE:
+      return {
+        ...state,
+        teachers: action.teachers,
+        discipline: action.discipline,
+      };
+    case adminActions.ADD_TEACHER:
+      return {
+        ...state,
+        teachers: [...state.teachers, action.teacher],
+      };
+    case adminActions.ADD_DISCIPLINE:
+      return {
+        ...state,
+        discipline: [...state.discipline, action.discipline],
+      };
+    case adminActions.DELETE_TEACHER:
+      return {
+        ...state,
+        teachers: state.teachers.filter(el => el.id !== action.teachersId),
+      };
+
+      case adminActions.DELETE_DISCIPLINE:
+        return {
+          ...state,
+          discipline: state.discipline.filter(el => el.id !== action.disciplineId),
+        };
     default:
       return state;
   }

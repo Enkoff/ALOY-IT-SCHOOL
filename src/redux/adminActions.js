@@ -12,6 +12,11 @@ export const ADD_RATING = "ADD_RATING";
 export const DELETE_RANG_ITEM = "DELETE_RANG_ITEM";
 export const ADD_HOME_WORK_ITEM = "ADD_HOME_WORK_ITEM";
 export const DELET_HOME_WORK_ITEM = "DELET_HOME_WORK_ITEM";
+export const SET_TEACHERS_AND_DISCIPLINE = "SET_TEACHERS_AND_DISCIPLINE";
+export const ADD_TEACHER = 'ADD_TEACHER';
+export const ADD_DISCIPLINE = 'ADD_DISCIPLINE';
+export const DELETE_TEACHER = 'DELETE_TEACHER';
+export const DELETE_DISCIPLINE = 'DELETE_DISCIPLINE';
 
 export const addUser = (email, password, name, role) => {
   return async (dispatch) => {
@@ -50,6 +55,28 @@ export const setUsers = () => {
       type: SET_USERS,
       users: userArray,
       groups: (groups = [...new Set(groups)]),
+    });
+  };
+};
+
+export const setTeachersAndDiscipline = () => {
+  return async (dispatch) => {
+    const teachers = [];
+    const discipline = [];
+    const responseTeachers = await FB.firestore().collection("teachers").get();
+    responseTeachers.forEach((el) => {
+      teachers.push(el.data());
+    });
+    const responseDiscipline = await FB.firestore()
+      .collection("discipline")
+      .get();
+    responseDiscipline.forEach((el) => {
+      discipline.push(el.data());
+    });
+    dispatch({
+      type: SET_TEACHERS_AND_DISCIPLINE,
+      teachers,
+      discipline,
     });
   };
 };
@@ -201,6 +228,62 @@ export const deleteHomeWorkItem = (uid, homeWorkItemId) => {
     });
   };
 };
+
+export const addTeacher = (teacherName) => {
+  const docId = uuidv4();
+
+  const teacher = {
+    id: docId,
+    name: teacherName,
+  };
+
+  return async (dispatch) => {
+    await FB.firestore().collection("teachers").doc(docId).set(teacher);
+    dispatch({
+      type: ADD_TEACHER,
+      teacher,
+    });
+  };
+};
+
+export const addDiscipline = (disciplineName) => {
+  const docId = uuidv4();
+
+  const discipline = {
+    id: docId,
+    name: disciplineName,
+  };
+  return async (dispatch) => {
+    await FB.firestore().collection("discipline").doc(docId).set(discipline);
+    dispatch({
+      type: ADD_DISCIPLINE,
+      discipline,
+    });
+  };
+};
+
+export const deleteTeacher = (id) => {
+  return async (dispatch) => {
+
+     await FB.firestore().collection("teachers").doc(id).delete()
+
+     dispatch({
+      type: DELETE_TEACHER,
+      teachersId: id
+    });
+  }
+}
+
+export const deleteDiscipline = (id) => {
+  return async (dispatch) => {
+    await FB.firestore().collection("discipline").doc(id).delete()
+
+    dispatch({
+     type: DELETE_DISCIPLINE,
+     disciplineId: id
+   });
+  }
+}
 
 export const addCalendarData = (
   collectionGroupName,

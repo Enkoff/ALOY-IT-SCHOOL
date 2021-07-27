@@ -43,8 +43,12 @@ const useStyles = makeStyles((theme) => ({
     padding: "0px",
   },
   trBtn: {
+    width: '10%',
+    boxShadow: '0px 5px 10px 2px #DDDDDD inset',
+    borderRadius: '20px',
     "&:hover": {
-      backgroundColor: "grey",
+      backgroundColor: "#DDDDDD",
+      cursor: 'pointer'
     },
   },
 }));
@@ -245,7 +249,7 @@ export default function Row({ users }) {
                       Дата
                     </TableCell>
                     <TableCell className={classes.tableCell} align="center">
-                      Кількість оцінок
+                      Кількість оцінок / пропусків
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -290,7 +294,7 @@ export default function Row({ users }) {
                       Дата
                     </TableCell>
                     <TableCell className={classes.tableCell} align="center">
-                      Кількість оцінок
+                      Кількість оцінок дз / не виконаних дз
                     </TableCell>
                   </TableRow>
                 </TableHead>

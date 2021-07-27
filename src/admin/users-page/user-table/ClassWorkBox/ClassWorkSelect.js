@@ -10,8 +10,8 @@ import {
 } from "@material-ui/core";
 import HelpIcon from "@material-ui/icons/Help";
 import moment from "moment";
-import { useDispatch } from "react-redux";
-import { addRating } from "../../../../redux/adminActions";
+import { useDispatch, useSelector } from "react-redux";
+import { addRating, setTeachersAndDiscipline } from "../../../../redux/adminActions";
 import { useSnackbar } from "notistack";
 import { classWorkValidation } from "./classWorkValidation";
 
@@ -61,6 +61,11 @@ export default function NativeSelects({ users: { id, reating, name } }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  const {teachers, discipline} = useSelector(state => state.admin);
+
+  useEffect(() => {
+    dispatch(setTeachersAndDiscipline());
+  },[dispatch])
 
   const [classWorkDate, setClassWorkDate] = useState("");
   const [alert, setAlert] = useState({});
@@ -169,9 +174,7 @@ export default function NativeSelects({ users: { id, reating, name } }) {
           inputProps={{ "aria-label": "subject" }}
         >
           <option value="">Предмет</option>
-          <option value="HTML">HTML</option>
-          <option value="CSS">CSS</option>
-          <option value="JS">JS</option>
+          {discipline !== undefined && discipline.map(el => <option key={el.id} value={`${el.name}`}>{el.name}</option>)}
         </NativeSelect>
       </FormControl>
       <FormControl className={classes.formControl}>
@@ -214,8 +217,7 @@ export default function NativeSelects({ users: { id, reating, name } }) {
           inputProps={{ "aria-label": "author" }}
         >
           <option value="">Викладач</option>
-          <option value="Андрій Лось">Андрій Лось</option>
-          <option value="Олег Єнько">Олег Єнько</option>
+          {teachers !== undefined && teachers.map(el => <option key={el.id} value={`${el.name}`}>{el.name}</option>)}
         </NativeSelect>
       </FormControl>
       <div style={{ position: "relative" }}>
